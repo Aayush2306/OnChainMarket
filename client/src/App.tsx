@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { SocketProvider } from "@/context/SocketContext";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
@@ -85,9 +86,12 @@ function Router() {
 
 function AppContent() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
-      <Router />
+      <main className="flex-1">
+        <Router />
+      </main>
+      <Footer />
     </div>
   );
 }
