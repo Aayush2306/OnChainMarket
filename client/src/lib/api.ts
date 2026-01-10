@@ -89,4 +89,6 @@ export const api = {
   getUserCustomBets: () => apiRequest("GET", "/api/custom-bet/user-bets"),
   
   getCreatorEarnings: () => apiRequest("GET", "/api/custom-bet/creator-earnings"),
+  
+  getNotifications: () => apiRequest("GET", "/api/notifications"),
 };

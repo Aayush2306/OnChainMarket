@@ -14,37 +14,38 @@ import {
 } from "lucide-react";
 import { api } from "@/lib/api";
 
-interface UserBet {
+interface Notification {
   id: number;
-  crypto: string;
+  crypto?: string;
+  symbol?: string;
   direction: string;
   amount: number;
   profit?: number;
+  payout?: number;
   status: string;
-  start_price: number;
+  result?: string;
+  start_price?: number;
   end_price?: number;
   created_at: string;
+  resolved_at?: string;
 }
 
-interface MyStats {
-  bets?: UserBet[];
-  recent_bets?: UserBet[];
-  bet_history?: UserBet[];
-  total_bets?: number;
-  wins?: number;
-  losses?: number;
+interface NotificationsResponse {
+  notifications?: Notification[];
+  results?: Notification[];
+  bets?: Notification[];
 }
 
 export default function Notifications() {
-  const { data: stats, isLoading } = useQuery<MyStats>({
-    queryKey: ["/api/my-stats"],
-    queryFn: () => api.getMyStats() as Promise<MyStats>,
+  const { data, isLoading } = useQuery<NotificationsResponse>({
+    queryKey: ["/api/notifications"],
+    queryFn: () => api.getNotifications() as Promise<NotificationsResponse>,
     refetchInterval: 30000,
   });
 
-  const bets = stats?.bets || stats?.recent_bets || stats?.bet_history || [];
-  const completedBets = bets.filter(bet => 
-    bet.status === "won" || bet.status === "lost" || bet.profit !== undefined
+  const notifications = data?.notifications || data?.results || data?.bets || [];
+  const completedBets = notifications.filter(n => 
+    n.status === "won" || n.status === "lost" || n.result === "won" || n.result === "lost" || n.profit !== undefined
   );
 
   const formatDate = (dateStr: string) => {
@@ -98,13 +99,15 @@ export default function Notifications() {
           </Card>
         ) : (
           <div className="space-y-3">
-            {completedBets.map((bet, index) => {
-              const isWin = bet.status === "won";
-              const isUp = bet.direction.toLowerCase() === "up" || bet.direction.toLowerCase() === "higher";
+            {completedBets.map((n, index) => {
+              const isWin = n.status === "won" || n.result === "won";
+              const isUp = n.direction?.toLowerCase() === "up" || n.direction?.toLowerCase() === "higher";
+              const symbol = n.crypto || n.symbol || "BET";
+              const winAmount = n.profit || n.payout || n.amount;
               
               return (
                 <Card 
-                  key={bet.id} 
+                  key={n.id} 
                   className={`hover-elevate transition-all ${isWin ? "border-win/30" : "border-loss/30"}`}
                   data-testid={`notification-${index}`}
                 >
@@ -125,26 +128,30 @@ export default function Notifications() {
                           </span>
                           <Badge variant="outline" className="text-xs">
                             <Bitcoin className="h-3 w-3 mr-1" />
-                            {bet.crypto}
+                            {symbol}
                           </Badge>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            {isUp ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                            {bet.direction.toUpperCase()}
-                          </span>
-                          <span>•</span>
-                          <span>{formatDate(bet.created_at)}</span>
+                          {n.direction && (
+                            <>
+                              <span className="flex items-center gap-1">
+                                {isUp ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                                {n.direction.toUpperCase()}
+                              </span>
+                              <span>•</span>
+                            </>
+                          )}
+                          <span>{formatDate(n.resolved_at || n.created_at)}</span>
                         </div>
                       </div>
 
                       <div className="text-right">
                         <div className={`font-mono font-bold text-lg ${isWin ? "text-win" : "text-loss"}`}>
-                          {isWin ? "+" : "-"}{isWin ? bet.profit : bet.amount}
+                          {isWin ? "+" : "-"}{isWin ? winAmount : n.amount}
                         </div>
                         <div className="flex items-center gap-1 text-xs text-muted-foreground justify-end">
                           <Coins className="h-3 w-3" />
-                          Bet: {bet.amount}
+                          Bet: {n.amount}
                         </div>
                       </div>
                     </div>
@@ -155,7 +162,7 @@ export default function Notifications() {
           </div>
         )}
 
-        {stats && (
+        {completedBets.length > 0 && (
           <Card className="mt-8">
             <CardHeader className="pb-3">
               <CardTitle className="text-lg">Summary</CardTitle>
@@ -163,15 +170,19 @@ export default function Notifications() {
             <CardContent>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <p className="text-2xl font-bold font-mono">{stats.total_bets || 0}</p>
-                  <p className="text-xs text-muted-foreground">Total Bets</p>
+                  <p className="text-2xl font-bold font-mono">{completedBets.length}</p>
+                  <p className="text-xs text-muted-foreground">Total Results</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold font-mono text-win">{stats.wins || 0}</p>
+                  <p className="text-2xl font-bold font-mono text-win">
+                    {completedBets.filter(n => n.status === "won" || n.result === "won").length}
+                  </p>
                   <p className="text-xs text-muted-foreground">Wins</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold font-mono text-loss">{stats.losses || 0}</p>
+                  <p className="text-2xl font-bold font-mono text-loss">
+                    {completedBets.filter(n => n.status === "lost" || n.result === "lost").length}
+                  </p>
                   <p className="text-xs text-muted-foreground">Losses</p>
                 </div>
               </div>
