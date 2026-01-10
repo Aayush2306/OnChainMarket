@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -6,45 +6,45 @@ import { Trophy, Coins, TrendingUp, Bitcoin, Link2, Sparkles } from "lucide-reac
 import type { Winner } from "@shared/schema";
 import { api } from "@/lib/api";
 
-const typeIcons = {
+const typeIcons: Record<string, typeof Bitcoin> = {
   crypto: Bitcoin,
   stock: TrendingUp,
   onchain: Link2,
   custom: Sparkles,
 };
 
-const typeColors = {
+const typeColors: Record<string, string> = {
   crypto: "text-orange-500",
   stock: "text-emerald-500",
   onchain: "text-violet-500",
   custom: "text-pink-500",
 };
 
+const mockWinners: Winner[] = [
+  { username: "CryptoKing", amount: 500, profit: 400, crypto: "BTC", type: "crypto" },
+  { username: "DeFiMaster", amount: 200, profit: 160, crypto: "ETH", type: "crypto" },
+  { username: "SolanaFan", amount: 1000, profit: 800, token_symbol: "BONK", type: "custom" },
+  { username: "StockTrader", amount: 300, profit: 240, crypto: "AAPL", type: "stock" },
+  { username: "OnChainDegen", amount: 150, profit: 120, category: "pump.fun", type: "onchain" },
+];
+
 export function RecentWinners() {
-  const [winners, setWinners] = useState<Winner[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchWinners = async () => {
+  const { data: winners = mockWinners, isLoading } = useQuery<Winner[]>({
+    queryKey: ["/api/recent-winners"],
+    queryFn: async () => {
       try {
-        const data = await api.getRecentWinners() as Winner[];
-        setWinners(data || []);
+        const data = await api.getRecentWinners();
+        if (Array.isArray(data) && data.length > 0) {
+          return data as Winner[];
+        }
+        return mockWinners;
       } catch {
-        // Use mock data for display purposes
-        setWinners([
-          { username: "CryptoKing", amount: 500, profit: 400, crypto: "BTC", type: "crypto" },
-          { username: "DeFiMaster", amount: 200, profit: 160, crypto: "ETH", type: "crypto" },
-          { username: "SolanaFan", amount: 1000, profit: 800, token_symbol: "BONK", type: "custom" },
-          { username: "StockTrader", amount: 300, profit: 240, crypto: "AAPL", type: "stock" },
-          { username: "OnChainDegen", amount: 150, profit: 120, category: "pump.fun", type: "onchain" },
-        ]);
-      } finally {
-        setIsLoading(false);
+        return mockWinners;
       }
-    };
-
-    fetchWinners();
-  }, []);
+    },
+    staleTime: 30000,
+    refetchInterval: 30000,
+  });
 
   if (isLoading) {
     return (
@@ -89,8 +89,8 @@ export function RecentWinners() {
             </p>
           ) : (
             winners.map((winner, index) => {
-              const Icon = typeIcons[winner.type];
-              const iconColor = typeColors[winner.type];
+              const Icon = typeIcons[winner.type] || Bitcoin;
+              const iconColor = typeColors[winner.type] || "text-primary";
               
               return (
                 <div

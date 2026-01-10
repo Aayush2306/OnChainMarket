@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/api";
+import { queryClient } from "@/lib/queryClient";
 import { createCustomBetSchema, type CustomBetRound } from "@shared/schema";
 import { 
   TrendingUp, 
@@ -39,7 +41,6 @@ import {
 
 function CreateBetForm() {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(createCustomBetSchema),
@@ -49,18 +50,22 @@ function CreateBetForm() {
     },
   });
 
-  const handleSubmit = async (values: { token_ca: string; duration: number }) => {
-    setIsSubmitting(true);
-    try {
-      await api.createCustomBet(values.token_ca, values.duration);
+  const createMutation = useMutation({
+    mutationFn: (values: { token_ca: string; duration: number }) =>
+      api.createCustomBet(values.token_ca, values.duration),
+    onSuccess: () => {
       toast({ title: "Custom bet created successfully!" });
       form.reset();
-    } catch (err) {
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-bet/active"] });
+    },
+    onError: (err) => {
       const message = err instanceof Error ? err.message : "Failed to create bet";
       toast({ title: message, variant: "destructive" });
-    } finally {
-      setIsSubmitting(false);
-    }
+    },
+  });
+
+  const handleSubmit = (values: { token_ca: string; duration: number }) => {
+    createMutation.mutate(values);
   };
 
   return (
@@ -128,10 +133,10 @@ function CreateBetForm() {
             <Button
               type="submit"
               className="w-full"
-              disabled={isSubmitting}
+              disabled={createMutation.isPending}
               data-testid="button-create-bet"
             >
-              {isSubmitting ? (
+              {createMutation.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   Creating...
@@ -156,7 +161,6 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
   const { user, refreshUser } = useAuth();
   const [amount, setAmount] = useState("");
   const [selectedPrediction, setSelectedPrediction] = useState<"higher" | "lower" | null>(null);
-  const [isPlacingBet, setIsPlacingBet] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
@@ -171,7 +175,23 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
     return () => clearInterval(interval);
   }, [bet.end_time]);
 
-  const handlePlaceBet = async () => {
+  const placeBetMutation = useMutation({
+    mutationFn: ({ prediction, betAmount }: { prediction: string; betAmount: number }) =>
+      api.placeCustomBet(bet.id, prediction, betAmount),
+    onSuccess: () => {
+      toast({ title: "Bet placed successfully!" });
+      setAmount("");
+      setSelectedPrediction(null);
+      refreshUser();
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-bet/active"] });
+    },
+    onError: (err) => {
+      const message = err instanceof Error ? err.message : "Failed to place bet";
+      toast({ title: message, variant: "destructive" });
+    },
+  });
+
+  const handlePlaceBet = () => {
     if (!selectedPrediction || !amount) return;
 
     const betAmount = parseInt(amount);
@@ -185,19 +205,7 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
       return;
     }
 
-    setIsPlacingBet(true);
-    try {
-      await api.placeCustomBet(bet.id, selectedPrediction, betAmount);
-      toast({ title: "Bet placed successfully!" });
-      setAmount("");
-      setSelectedPrediction(null);
-      refreshUser();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to place bet";
-      toast({ title: message, variant: "destructive" });
-    } finally {
-      setIsPlacingBet(false);
-    }
+    placeBetMutation.mutate({ prediction: selectedPrediction, betAmount });
   };
 
   const formatTime = (seconds: number) => {
@@ -207,7 +215,7 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
   };
 
   const isExpired = timeLeft <= 0;
-  const bettingClosed = timeLeft < 300; // 5 minutes before end
+  const bettingClosed = timeLeft < 300;
 
   return (
     <Card className="hover-elevate transition-all" data-testid={`custom-bet-${bet.id}`}>
@@ -288,10 +296,10 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
               />
               <Button
                 size="sm"
-                disabled={!selectedPrediction || !amount || isPlacingBet}
+                disabled={!selectedPrediction || !amount || placeBetMutation.isPending}
                 onClick={handlePlaceBet}
               >
-                {isPlacingBet ? <Loader2 className="h-4 w-4 animate-spin" /> : "Bet"}
+                {placeBetMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Bet"}
               </Button>
             </div>
           </>
@@ -308,25 +316,11 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
 }
 
 function ActiveBets() {
-  const [bets, setBets] = useState<CustomBetRound[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchBets = async () => {
-      try {
-        const data = await api.getActiveCustomBets() as CustomBetRound[];
-        setBets(data || []);
-      } catch {
-        // Silently fail
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchBets();
-    const interval = setInterval(fetchBets, 10000);
-    return () => clearInterval(interval);
-  }, []);
+  const { data: bets = [], isLoading } = useQuery<CustomBetRound[]>({
+    queryKey: ["/api/custom-bet/active"],
+    queryFn: () => api.getActiveCustomBets() as Promise<CustomBetRound[]>,
+    refetchInterval: 10000,
+  });
 
   if (isLoading) {
     return (

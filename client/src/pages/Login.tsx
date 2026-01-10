@@ -1,25 +1,20 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
+import { useLocation, Redirect } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { usePhantom } from "@/hooks/usePhantom";
 import { OnboardingModal } from "@/components/OnboardingModal";
 import { Wallet, Loader2, AlertCircle, ExternalLink } from "lucide-react";
-import { api } from "@/lib/api";
 
 export default function Login() {
-  const [, setLocation] = useLocation();
   const { isAuthenticated, login, setNeedsOnboarding, needsOnboarding, setWalletAddress, walletAddress } = useAuth();
-  const { isPhantomInstalled, isConnecting, error, connectAndSign } = usePhantom();
-  const [pendingSignature, setPendingSignature] = useState<string | null>(null);
+  const { isPhantomInstalled, isConnecting, error, connectAndSign, signMessage } = usePhantom();
   const [loginError, setLoginError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      setLocation("/");
-    }
-  }, [isAuthenticated, setLocation]);
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   const handleConnect = async () => {
     setLoginError(null);
@@ -28,11 +23,9 @@ export default function Login() {
     if (!result) return;
 
     setWalletAddress(result.walletAddress);
-    setPendingSignature(result.signature);
 
     try {
       await login(result.walletAddress, result.signature);
-      setLocation("/");
     } catch (err) {
       const message = err instanceof Error ? err.message : "Login failed";
       
@@ -45,23 +38,15 @@ export default function Login() {
   };
 
   const handleOnboardingComplete = async (name: string, username: string) => {
-    if (!walletAddress || !pendingSignature) return;
+    if (!walletAddress) return;
 
-    try {
-      const nonceResponse = await api.getNonce(walletAddress);
-      
-      const provider = window.phantom?.solana;
-      if (!provider) throw new Error("Phantom not found");
-
-      const encodedMessage = new TextEncoder().encode(nonceResponse.message);
-      const { signature } = await provider.signMessage(encodedMessage, "utf8");
-      const signatureBase64 = btoa(String.fromCharCode(...signature));
-
-      await login(walletAddress, signatureBase64, name, username);
-      setLocation("/");
-    } catch (err) {
-      throw err;
+    // Get a fresh signature with the new nonce for registration
+    const signature = await signMessage(walletAddress);
+    if (!signature) {
+      throw new Error("Failed to sign message");
     }
+
+    await login(walletAddress, signature, name, username);
   };
 
   return (

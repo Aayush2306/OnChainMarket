@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/api";
+import { queryClient } from "@/lib/queryClient";
 import { ONCHAIN_CATEGORIES, type OnchainRound } from "@shared/schema";
 import { 
   TrendingUp, 
@@ -34,33 +36,42 @@ interface OnchainCardProps {
 function OnchainCard({ category, config }: OnchainCardProps) {
   const { toast } = useToast();
   const { user, refreshUser } = useAuth();
-  const [round, setRound] = useState<OnchainRound | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [amount, setAmount] = useState("");
   const [selectedPrediction, setSelectedPrediction] = useState<"higher" | "lower" | null>(null);
-  const [isPlacingBet, setIsPlacingBet] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
 
   const Icon = iconMap[config.icon] || Rocket;
 
-  useEffect(() => {
-    const fetchRound = async () => {
+  const { data: round, isLoading } = useQuery<OnchainRound | null>({
+    queryKey: ["/api/onchain/round", category],
+    queryFn: async () => {
       try {
-        const data = await api.getOnchainRound(category) as OnchainRound;
-        if (!("waiting" in data)) {
-          setRound(data);
-        }
+        const data = await api.getOnchainRound(category);
+        if ("waiting" in (data as object)) return null;
+        return data as OnchainRound;
       } catch {
-        // Silently fail
-      } finally {
-        setIsLoading(false);
+        return null;
       }
-    };
+    },
+    refetchInterval: 60000,
+  });
 
-    fetchRound();
-    const interval = setInterval(fetchRound, 60000);
-    return () => clearInterval(interval);
-  }, [category]);
+  const placeBetMutation = useMutation({
+    mutationFn: async ({ roundId, prediction, betAmount }: { roundId: number; prediction: string; betAmount: number }) => {
+      return api.placeOnchainBet(roundId, category, prediction, betAmount);
+    },
+    onSuccess: () => {
+      toast({ title: "Bet placed successfully!" });
+      setAmount("");
+      setSelectedPrediction(null);
+      refreshUser();
+      queryClient.invalidateQueries({ queryKey: ["/api/onchain/round", category] });
+    },
+    onError: (err) => {
+      const message = err instanceof Error ? err.message : "Failed to place bet";
+      toast({ title: message, variant: "destructive" });
+    },
+  });
 
   useEffect(() => {
     if (!round) return;
@@ -76,7 +87,7 @@ function OnchainCard({ category, config }: OnchainCardProps) {
     return () => clearInterval(interval);
   }, [round]);
 
-  const handlePlaceBet = async () => {
+  const handlePlaceBet = () => {
     if (!round || !selectedPrediction || !amount) return;
 
     const betAmount = parseInt(amount);
@@ -90,19 +101,7 @@ function OnchainCard({ category, config }: OnchainCardProps) {
       return;
     }
 
-    setIsPlacingBet(true);
-    try {
-      await api.placeOnchainBet(round.id, category, selectedPrediction, betAmount);
-      toast({ title: "Bet placed successfully!" });
-      setAmount("");
-      setSelectedPrediction(null);
-      refreshUser();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to place bet";
-      toast({ title: message, variant: "destructive" });
-    } finally {
-      setIsPlacingBet(false);
-    }
+    placeBetMutation.mutate({ roundId: round.id, prediction: selectedPrediction, betAmount });
   };
 
   const formatTime = (seconds: number) => {
@@ -249,11 +248,11 @@ function OnchainCard({ category, config }: OnchainCardProps) {
 
         <Button
           className="w-full"
-          disabled={!selectedPrediction || !amount || isExpired || isPlacingBet}
+          disabled={!selectedPrediction || !amount || isExpired || placeBetMutation.isPending}
           onClick={handlePlaceBet}
           data-testid={`button-bet-${category}`}
         >
-          {isPlacingBet ? (
+          {placeBetMutation.isPending ? (
             <>
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               Placing Bet...

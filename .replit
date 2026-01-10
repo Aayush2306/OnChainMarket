@@ -40,3 +40,8 @@ waitForPort = 5000
 
 [agent]
 integrations = ["javascript_websocket:1.0.0"]
+
+[userenv]
+
+[userenv.shared]
+VITE_API_URL = "https://price-production-c1cb.up.railway.app"

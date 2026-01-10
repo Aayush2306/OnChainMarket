@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/api";
+import { queryClient } from "@/lib/queryClient";
 import { CRYPTO_MAP, type CryptoRound } from "@shared/schema";
 import { 
   TrendingUp, 
@@ -24,31 +26,40 @@ interface CryptoCardProps {
 function CryptoCard({ symbol, name }: CryptoCardProps) {
   const { toast } = useToast();
   const { user, refreshUser } = useAuth();
-  const [round, setRound] = useState<CryptoRound | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [amount, setAmount] = useState("");
   const [selectedDirection, setSelectedDirection] = useState<"up" | "down" | null>(null);
-  const [isPlacingBet, setIsPlacingBet] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
 
-  useEffect(() => {
-    const fetchRound = async () => {
+  const { data: round, isLoading } = useQuery<CryptoRound | null>({
+    queryKey: ["/api/rounds", symbol],
+    queryFn: async () => {
       try {
-        const data = await api.getCurrentRound(symbol) as CryptoRound;
-        if (!("waiting" in data)) {
-          setRound(data);
-        }
+        const data = await api.getCurrentRound(symbol);
+        if ("waiting" in (data as object)) return null;
+        return data as CryptoRound;
       } catch {
-        // Silently fail
-      } finally {
-        setIsLoading(false);
+        return null;
       }
-    };
+    },
+    refetchInterval: 10000,
+  });
 
-    fetchRound();
-    const interval = setInterval(fetchRound, 10000);
-    return () => clearInterval(interval);
-  }, [symbol]);
+  const placeBetMutation = useMutation({
+    mutationFn: async ({ roundId, direction, betAmount }: { roundId: number; direction: string; betAmount: number }) => {
+      return api.placeBet(roundId, symbol, direction, betAmount);
+    },
+    onSuccess: () => {
+      toast({ title: "Bet placed successfully!" });
+      setAmount("");
+      setSelectedDirection(null);
+      refreshUser();
+      queryClient.invalidateQueries({ queryKey: ["/api/rounds", symbol] });
+    },
+    onError: (err) => {
+      const message = err instanceof Error ? err.message : "Failed to place bet";
+      toast({ title: message, variant: "destructive" });
+    },
+  });
 
   useEffect(() => {
     if (!round) return;
@@ -78,19 +89,7 @@ function CryptoCard({ symbol, name }: CryptoCardProps) {
       return;
     }
 
-    setIsPlacingBet(true);
-    try {
-      await api.placeBet(round.id, symbol, selectedDirection, betAmount);
-      toast({ title: "Bet placed successfully!" });
-      setAmount("");
-      setSelectedDirection(null);
-      refreshUser();
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to place bet";
-      toast({ title: message, variant: "destructive" });
-    } finally {
-      setIsPlacingBet(false);
-    }
+    placeBetMutation.mutate({ roundId: round.id, direction: selectedDirection, betAmount });
   };
 
   const formatTime = (seconds: number) => {
@@ -211,11 +210,11 @@ function CryptoCard({ symbol, name }: CryptoCardProps) {
 
         <Button
           className="w-full"
-          disabled={!selectedDirection || !amount || isExpired || isPlacingBet}
+          disabled={!selectedDirection || !amount || isExpired || placeBetMutation.isPending}
           onClick={handlePlaceBet}
           data-testid={`button-bet-${symbol}`}
         >
-          {isPlacingBet ? (
+          {placeBetMutation.isPending ? (
             <>
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               Placing Bet...

@@ -44,7 +44,7 @@ export function usePhantom() {
     return null;
   }, []);
 
-  const connectAndSign = useCallback(async (): Promise<{ walletAddress: string; signature: string } | null> => {
+  const connectAndSign = useCallback(async (): Promise<{ walletAddress: string; signature: string; message: string } | null> => {
     setIsConnecting(true);
     setError(null);
 
@@ -71,13 +71,39 @@ export function usePhantom() {
       // Convert signature to base64
       const signatureBase64 = btoa(String.fromCharCode(...signature));
 
-      return { walletAddress, signature: signatureBase64 };
+      return { walletAddress, signature: signatureBase64, message };
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to connect wallet";
-      setError(message);
+      const errorMessage = err instanceof Error ? err.message : "Failed to connect wallet";
+      setError(errorMessage);
       return null;
     } finally {
       setIsConnecting(false);
+    }
+  }, [getProvider]);
+
+  const signMessage = useCallback(async (walletAddress: string): Promise<string | null> => {
+    setError(null);
+
+    try {
+      const provider = getProvider();
+      if (!provider) {
+        setError("Phantom wallet not found");
+        return null;
+      }
+
+      // Get new nonce from backend
+      const { message } = await api.getNonce(walletAddress);
+
+      // Sign the message
+      const encodedMessage = new TextEncoder().encode(message);
+      const { signature } = await provider.signMessage(encodedMessage, "utf8");
+
+      // Convert signature to base64
+      return btoa(String.fromCharCode(...signature));
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to sign message";
+      setError(errorMessage);
+      return null;
     }
   }, [getProvider]);
 
@@ -97,6 +123,7 @@ export function usePhantom() {
     isConnecting,
     error,
     connectAndSign,
+    signMessage,
     disconnect,
     getProvider,
   };
