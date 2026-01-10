@@ -78,7 +78,7 @@ export default function StockDetail() {
         return null;
       }
     },
-    refetchInterval: isConnected ? 30000 : 5000,
+    refetchInterval: 5000,
   });
 
   const placeBetMutation = useMutation({

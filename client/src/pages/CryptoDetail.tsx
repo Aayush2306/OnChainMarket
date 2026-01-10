@@ -82,7 +82,7 @@ export default function CryptoDetail() {
         return null;
       }
     },
-    refetchInterval: isConnected ? 30000 : 5000,
+    refetchInterval: 5000,
   });
 
   const placeBetMutation = useMutation({

@@ -23,8 +23,10 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const newSocket = io(SOCKET_URL, {
-      transports: ["websocket", "polling"],
+      transports: ["polling", "websocket"],
       withCredentials: true,
+      reconnectionAttempts: 3,
+      timeout: 5000,
     });
 
     newSocket.on("connect", () => {
@@ -34,6 +36,11 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 
     newSocket.on("disconnect", () => {
       console.log("Socket disconnected");
+      setIsConnected(false);
+    });
+
+    newSocket.on("connect_error", (err) => {
+      console.log("Socket connection error, falling back to polling:", err.message);
       setIsConnected(false);
     });
 
