@@ -81,11 +81,22 @@ export default {
           busy: "rgb(239 68 68)",
           offline: "rgb(156 163 175)",
         },
+        success: {
+          DEFAULT: "hsl(142 76% 36%)",
+          foreground: "hsl(0 0% 100%)",
+        },
+        warning: {
+          DEFAULT: "hsl(38 92% 50%)",
+          foreground: "hsl(0 0% 0%)",
+        },
+        win: "hsl(142 76% 45%)",
+        loss: "hsl(0 72% 51%)",
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+        display: ["var(--font-display)"],
       },
       keyframes: {
         "accordion-down": {
@@ -96,10 +107,40 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "pulse-subtle": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.03)" },
+        },
+        "slide-up": {
+          from: { opacity: "0", transform: "translateY(10px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "slide-in-right": {
+          from: { opacity: "0", transform: "translateX(20px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "countdown-pulse": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-subtle": "pulse-subtle 0.3s ease-in-out",
+        "slide-up": "slide-up 0.4s ease-out",
+        "slide-in-right": "slide-in-right 0.4s ease-out",
+        "fade-in": "fade-in 0.3s ease-out",
+        "shimmer": "shimmer 2s linear infinite",
+        "countdown-pulse": "countdown-pulse 1s ease-in-out infinite",
       },
     },
   },
