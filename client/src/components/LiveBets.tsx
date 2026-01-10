@@ -33,7 +33,8 @@ export function LiveBets({ roundId, crypto }: LiveBetsProps) {
       }
     },
     enabled: !!roundId,
-    refetchInterval: 3000,
+    staleTime: 30000,
+    refetchInterval: 5000,
   });
 
   const formatWalletAddress = (address?: string) => {

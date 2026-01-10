@@ -34,6 +34,7 @@ export default function Notifications() {
   const { data, isLoading } = useQuery<Notification[]>({
     queryKey: ["/api/notifications"],
     queryFn: () => api.getNotifications() as Promise<Notification[]>,
+    staleTime: 30000,
     refetchInterval: 30000,
   });
 

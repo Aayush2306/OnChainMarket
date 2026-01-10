@@ -82,7 +82,8 @@ export default function CryptoDetail() {
         return null;
       }
     },
-    refetchInterval: 5000,
+    staleTime: 30000,
+    refetchInterval: isConnected ? false : 5000,
   });
 
   const placeBetMutation = useMutation({
