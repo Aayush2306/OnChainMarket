@@ -69,6 +69,32 @@ Preferred communication style: Simple, everyday language.
 
 ### Third-Party Libraries
 - **UI**: Radix UI primitives, Lucide icons, class-variance-authority
-- **Charts**: Recharts (via shadcn chart component)
+- **Charts**: Recharts (via shadcn chart component), TradingView widget for live charts
+- **Real-time**: Socket.IO client for WebSocket connections
 - **Date Handling**: date-fns
 - **Carousel**: Embla Carousel React
+
+## Recent Changes
+
+### Mobile Responsiveness (January 2026)
+- Added comprehensive mobile-first responsive design across all pages
+- Responsive typography: `text-2xl sm:text-3xl` pattern for all headings
+- Responsive spacing: `gap-4 sm:gap-6`, `p-3 sm:p-4` patterns
+- Touch-friendly interactions with `touch-manipulation` class
+- Mobile-first layout ordering using Tailwind's `order-*` utilities
+- Chart heights: 300px mobile → 400px tablet → 500px desktop
+- Horizontally scrollable tabs on Stats page for mobile
+- LiveBets component shows below betting panel on mobile, beside chart on desktop
+
+### Real-time Updates (January 2026)
+- WebSocket integration via Socket.IO for live updates
+- Toast notifications for bet wins/losses with result details
+- Intelligent polling fallback when WebSocket disconnects (5s for markets, 30s for notifications)
+- Socket events: round_update, round_resolved, new_bet, credits_update, bet_result
+
+### CSS Utilities Added
+- `.glass` / `.glass-dark`: Glassmorphism effects
+- `.scrollbar-hide`: Hide scrollbars while maintaining scroll
+- `.text-gradient`: Primary color gradient text
+- `.safe-bottom`: Safe area padding for mobile devices
+- `.touch-manipulation`: Better touch response

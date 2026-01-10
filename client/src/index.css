@@ -286,4 +286,53 @@
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
   }
+
+  .glass {
+    @apply bg-card/80 backdrop-blur-lg border border-card-border;
+  }
+
+  .glass-dark {
+    @apply bg-background/80 backdrop-blur-lg border border-border;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-chart-2 to-chart-3 bg-clip-text text-transparent;
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  .btn-gradient {
+    @apply bg-gradient-to-r from-primary to-chart-2 text-white font-semibold;
+    @apply hover:opacity-90 transition-opacity;
+  }
+
+  .card-glass {
+    @apply bg-card/90 backdrop-blur-md border border-card-border rounded-lg;
+  }
+
+  .mobile-stack {
+    @apply flex flex-col;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-stack {
+      @apply flex-row;
+    }
+  }
 }

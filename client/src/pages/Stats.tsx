@@ -29,14 +29,14 @@ interface StatsCardProps {
 function StatsCard({ title, value, icon: Icon, iconColor = "text-primary", subtitle }: StatsCardProps) {
   return (
     <Card>
-      <CardContent className="p-6">
-        <div className="flex items-center gap-4">
-          <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-muted ${iconColor}`}>
-            <Icon className="h-6 w-6" />
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+          <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-muted ${iconColor}`}>
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">{title}</p>
-            <p className="text-2xl font-bold font-mono tabular-nums">{value}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{title}</p>
+            <p className="text-xl sm:text-2xl font-bold font-mono tabular-nums">{value}</p>
             {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
           </div>
         </div>
@@ -77,37 +77,37 @@ function BetHistoryItem({ bet, type }: BetHistoryItemProps) {
   const profit = bet.profit || 0;
 
   return (
-    <div className="flex items-center gap-4 p-4 rounded-lg bg-card border border-card-border hover-elevate transition-all">
-      <div className={`flex h-10 w-10 items-center justify-center rounded-lg bg-muted/50 ${iconColor}`}>
-        <Icon className="h-5 w-5" />
+    <div className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg bg-card border border-card-border hover-elevate transition-all">
+      <div className={`flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-muted/50 shrink-0 ${iconColor}`}>
+        <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
       </div>
 
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2">
-          <span className="font-medium">{symbol}</span>
-          <Badge variant="outline" className="text-xs">
+        <div className="flex flex-wrap items-center gap-1 sm:gap-2">
+          <span className="font-medium text-sm sm:text-base">{symbol}</span>
+          <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2">
             {direction === "up" || direction === "higher" ? (
-              <TrendingUp className="h-3 w-3 mr-1" />
+              <TrendingUp className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
             ) : (
-              <TrendingDown className="h-3 w-3 mr-1" />
+              <TrendingDown className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
             )}
             {direction?.toUpperCase()}
           </Badge>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xs sm:text-sm text-muted-foreground">
           Bet: {bet.amount} credits
         </p>
       </div>
 
-      <div className="text-right">
+      <div className="text-right shrink-0">
         <Badge
           variant={bet.status === "won" ? "default" : bet.status === "lost" ? "destructive" : "secondary"}
-          className={bet.status === "won" ? "bg-win text-white" : ""}
+          className={`text-[10px] sm:text-xs ${bet.status === "won" ? "bg-win text-white" : ""}`}
         >
           {bet.status?.toUpperCase()}
         </Badge>
         {profit !== 0 && (
-          <p className={`text-sm font-mono mt-1 ${profit > 0 ? "text-win" : "text-loss"}`}>
+          <p className={`text-xs sm:text-sm font-mono mt-1 ${profit > 0 ? "text-win" : "text-loss"}`}>
             {profit > 0 ? "+" : ""}{profit}
           </p>
         )}
@@ -161,16 +161,16 @@ export default function Stats() {
   }
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-4 sm:py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold font-display mb-2">My Stats</h1>
-          <p className="text-muted-foreground">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold font-display mb-1 sm:mb-2">My Stats</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
             Track your betting performance across all markets
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4 mb-6 sm:mb-8">
           <StatsCard
             title="Total Credits"
             value={user?.credits?.toLocaleString() || 0}
@@ -198,17 +198,19 @@ export default function Stats() {
         </div>
 
         <Card>
-          <CardHeader>
-            <CardTitle>Bet History</CardTitle>
+          <CardHeader className="pb-2 sm:pb-4">
+            <CardTitle className="text-lg sm:text-xl">Bet History</CardTitle>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="all">
-              <TabsList className="mb-4">
-                <TabsTrigger value="all">All ({allBets.length})</TabsTrigger>
-                <TabsTrigger value="crypto">Crypto ({cryptoBets.length})</TabsTrigger>
-                <TabsTrigger value="onchain">On-Chain ({onchainBets.length})</TabsTrigger>
-                <TabsTrigger value="custom">Custom ({customBets.length})</TabsTrigger>
-              </TabsList>
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+                <TabsList className="mb-4 w-max sm:w-auto">
+                  <TabsTrigger value="all" className="text-xs sm:text-sm">All ({allBets.length})</TabsTrigger>
+                  <TabsTrigger value="crypto" className="text-xs sm:text-sm">Crypto ({cryptoBets.length})</TabsTrigger>
+                  <TabsTrigger value="onchain" className="text-xs sm:text-sm">On-Chain ({onchainBets.length})</TabsTrigger>
+                  <TabsTrigger value="custom" className="text-xs sm:text-sm">Custom ({customBets.length})</TabsTrigger>
+                </TabsList>
+              </div>
 
               <TabsContent value="all" className="space-y-2">
                 {allBets.length === 0 ? (

@@ -8,25 +8,25 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      <section className="relative py-16 md:py-24 overflow-hidden">
+      <section className="relative py-10 sm:py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
         
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6 animate-fade-in">
-              <Zap className="h-4 w-4" />
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-primary mb-4 sm:mb-6 animate-fade-in">
+              <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               Predict. Bet. Win.
             </div>
             
-            <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-6 animate-slide-up">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 animate-slide-up">
               The Future of{" "}
               <span className="bg-gradient-to-r from-primary via-chart-2 to-chart-3 bg-clip-text text-transparent">
                 Prediction Markets
               </span>
             </h1>
             
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground mb-8 animate-slide-up" style={{ animationDelay: "100ms" }}>
+            <p className="mx-auto max-w-2xl text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 px-4 sm:px-0 animate-slide-up" style={{ animationDelay: "100ms" }}>
               Bet on crypto prices, stocks, on-chain metrics, and create custom prediction markets. 
               Connect your Phantom wallet and start winning today.
             </p>
@@ -34,9 +34,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="pb-16 md:pb-24">
+      <section className="pb-10 sm:pb-16 md:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-12">
+          <div className="grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-4 mb-8 sm:mb-12">
             <BettingCard
               title="Crypto Betting"
               description="Predict price movements for BTC, ETH, SOL, and 7 more cryptocurrencies"
@@ -73,7 +73,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto px-0 sm:px-4">
             <RecentWinners />
           </div>
         </div>

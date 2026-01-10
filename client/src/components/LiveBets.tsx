@@ -45,14 +45,14 @@ export function LiveBets({ roundId, crypto }: LiveBetsProps) {
   if (isLoading) {
     return (
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Activity className="h-5 w-5 text-primary" />
+        <CardHeader className="pb-2 sm:pb-3">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <Activity className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
             Live Bets
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex items-center justify-center py-8">
-          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        <CardContent className="flex items-center justify-center py-6 sm:py-8">
+          <Loader2 className="h-5 w-5 sm:h-6 sm:w-6 animate-spin text-muted-foreground" />
         </CardContent>
       </Card>
     );
@@ -60,21 +60,21 @@ export function LiveBets({ roundId, crypto }: LiveBetsProps) {
 
   return (
     <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Activity className="h-5 w-5 text-primary" />
+      <CardHeader className="pb-2 sm:pb-3">
+        <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <Activity className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
           Live Bets
           {bets.length > 0 && (
-            <Badge variant="secondary" className="ml-2">
+            <Badge variant="secondary" className="ml-2 text-xs">
               {bets.length}
             </Badge>
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-2 max-h-[300px] overflow-y-auto">
+      <CardContent className="p-3 sm:p-6 pt-0 sm:pt-0">
+        <div className="space-y-1.5 sm:space-y-2 max-h-[200px] sm:max-h-[300px] overflow-y-auto">
           {bets.length === 0 ? (
-            <p className="text-center text-muted-foreground py-6 text-sm">
+            <p className="text-center text-muted-foreground py-4 sm:py-6 text-xs sm:text-sm">
               No bets placed yet. Be the first!
             </p>
           ) : (
@@ -85,31 +85,31 @@ export function LiveBets({ roundId, crypto }: LiveBetsProps) {
               return (
                 <div
                   key={bet.id || index}
-                  className="flex items-center gap-3 p-2 rounded-lg bg-muted/30 animate-slide-up"
+                  className="flex items-center gap-2 sm:gap-3 p-1.5 sm:p-2 rounded-lg bg-muted/30 animate-slide-up"
                   style={{ animationDelay: `${index * 30}ms` }}
                   data-testid={`live-bet-${index}`}
                 >
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-6 w-6 sm:h-8 sm:w-8 shrink-0">
                     <AvatarImage src={profileImg} alt={displayName} />
-                    <AvatarFallback className="text-xs">
+                    <AvatarFallback className="text-[10px] sm:text-xs">
                       {displayName.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
 
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{displayName}</p>
+                    <p className="text-xs sm:text-sm font-medium truncate">{displayName}</p>
                   </div>
 
                   <Badge 
                     variant="outline"
-                    className={isUp ? "border-win text-win" : "border-loss text-loss"}
+                    className={`text-[10px] sm:text-xs px-1.5 sm:px-2 ${isUp ? "border-win text-win" : "border-loss text-loss"}`}
                   >
-                    {isUp ? <TrendingUp className="h-3 w-3 mr-1" /> : <TrendingDown className="h-3 w-3 mr-1" />}
+                    {isUp ? <TrendingUp className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" /> : <TrendingDown className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />}
                     {bet.direction.toUpperCase()}
                   </Badge>
 
-                  <div className="flex items-center gap-1 text-sm font-mono">
-                    <Coins className="h-3 w-3 text-warning" />
+                  <div className="flex items-center gap-0.5 sm:gap-1 text-xs sm:text-sm font-mono shrink-0">
+                    <Coins className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-warning" />
                     {bet.amount}
                   </div>
                 </div>

@@ -158,16 +158,18 @@ export default function CryptoDetail() {
           </Button>
         </Link>
 
-        <div className="flex items-center gap-4 mb-6">
-          {logo && <img src={logo} alt={upperSymbol} className="h-12 w-12" />}
-          <div>
-            <h1 className="text-3xl font-bold font-display">{upperSymbol}</h1>
-            <p className="text-muted-foreground">{name}</p>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+          <div className="flex items-center gap-4">
+            {logo && <img src={logo} alt={upperSymbol} className="h-10 w-10 sm:h-12 sm:w-12" />}
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold font-display">{upperSymbol}</h1>
+              <p className="text-sm sm:text-base text-muted-foreground">{name}</p>
+            </div>
           </div>
           {round && (
             <Badge 
               variant={isExpired ? "destructive" : timeLeft < 10 ? "destructive" : "secondary"}
-              className={`ml-auto text-lg px-4 py-2 ${timeLeft < 10 && !isExpired ? "animate-countdown-pulse" : ""}`}
+              className={`self-start sm:ml-auto text-base sm:text-lg px-3 sm:px-4 py-1.5 sm:py-2 ${timeLeft < 10 && !isExpired ? "animate-countdown-pulse" : ""}`}
             >
               <Clock className="h-4 w-4 mr-2" />
               {isExpired ? "Round Ended" : formatTime(timeLeft)}
@@ -175,18 +177,22 @@ export default function CryptoDetail() {
           )}
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardContent className="p-0 overflow-hidden rounded-lg">
-                <TradingViewChart symbol={upperSymbol} type="crypto" />
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6 order-2 lg:order-1">
+            <Card className="overflow-hidden">
+              <CardContent className="p-0">
+                <div className="h-[300px] sm:h-[400px] lg:h-[500px]">
+                  <TradingViewChart symbol={upperSymbol} type="crypto" />
+                </div>
               </CardContent>
             </Card>
 
-            <LiveBets roundId={round?.id || null} crypto={upperSymbol} />
+            <div className="hidden lg:block">
+              <LiveBets roundId={round?.id || null} crypto={upperSymbol} />
+            </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6 order-1 lg:order-2">
             {isLoading ? (
               <Card>
                 <CardContent className="p-6 flex items-center justify-center">
@@ -202,59 +208,60 @@ export default function CryptoDetail() {
               </Card>
             ) : (
               <Card data-testid="betting-panel">
-                <CardHeader>
-                  <CardTitle>Place Your Bet</CardTitle>
+                <CardHeader className="pb-2 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl">Place Your Bet</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-center py-4 rounded-lg bg-muted/50">
-                    <p className="text-sm text-muted-foreground">Start Price</p>
-                    <p className="text-4xl font-bold font-mono tabular-nums">
+                <CardContent className="space-y-3 sm:space-y-4">
+                  <div className="text-center py-3 sm:py-4 rounded-lg bg-muted/50">
+                    <p className="text-xs sm:text-sm text-muted-foreground">Start Price</p>
+                    <p className="text-2xl sm:text-4xl font-bold font-mono tabular-nums">
                       ${round.start_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <Button
                       variant={selectedDirection === "up" ? "default" : "outline"}
-                      className={`h-16 flex-col gap-2 ${selectedDirection === "up" ? "bg-win hover:bg-win/90 border-win" : ""}`}
+                      className={`h-14 sm:h-16 flex-col gap-1 sm:gap-2 touch-manipulation ${selectedDirection === "up" ? "bg-win hover:bg-win/90 border-win" : ""}`}
                       onClick={() => setSelectedDirection("up")}
                       disabled={isExpired}
                       data-testid="button-up"
                     >
-                      <TrendingUp className="h-6 w-6" />
-                      <span>UP</span>
+                      <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" />
+                      <span className="text-sm sm:text-base">UP</span>
                     </Button>
                     <Button
                       variant={selectedDirection === "down" ? "default" : "outline"}
-                      className={`h-16 flex-col gap-2 ${selectedDirection === "down" ? "bg-loss hover:bg-loss/90 border-loss" : ""}`}
+                      className={`h-14 sm:h-16 flex-col gap-1 sm:gap-2 touch-manipulation ${selectedDirection === "down" ? "bg-loss hover:bg-loss/90 border-loss" : ""}`}
                       onClick={() => setSelectedDirection("down")}
                       disabled={isExpired}
                       data-testid="button-down"
                     >
-                      <TrendingDown className="h-6 w-6" />
-                      <span>DOWN</span>
+                      <TrendingDown className="h-5 w-5 sm:h-6 sm:w-6" />
+                      <span className="text-sm sm:text-base">DOWN</span>
                     </Button>
                   </div>
 
-                  <div className="space-y-3">
+                  <div className="space-y-2 sm:space-y-3">
                     <div className="flex items-center gap-2">
-                      <Coins className="h-5 w-5 text-warning" />
+                      <Coins className="h-5 w-5 text-warning shrink-0" />
                       <Input
                         type="number"
                         placeholder="Enter amount"
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
-                        className="font-mono text-lg"
+                        className="font-mono text-base sm:text-lg"
                         disabled={isExpired}
                         data-testid="input-amount"
                       />
                     </div>
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
                       {[10, 50, 100, 500].map((val) => (
                         <Button
                           key={val}
                           variant="outline"
                           size="sm"
+                          className="text-xs sm:text-sm touch-manipulation"
                           onClick={() => setAmount(val.toString())}
                           disabled={isExpired}
                         >
@@ -265,7 +272,7 @@ export default function CryptoDetail() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full"
+                      className="w-full text-xs sm:text-sm touch-manipulation"
                       onClick={() => setAmount(user?.credits?.toString() || "0")}
                       disabled={isExpired}
                     >
@@ -274,14 +281,14 @@ export default function CryptoDetail() {
                   </div>
 
                   <Button
-                    className="w-full h-12 text-lg"
+                    className="w-full h-11 sm:h-12 text-base sm:text-lg touch-manipulation"
                     disabled={!selectedDirection || !amount || isExpired || placeBetMutation.isPending}
                     onClick={handlePlaceBet}
                     data-testid="button-place-bet"
                   >
                     {placeBetMutation.isPending ? (
                       <>
-                        <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                        <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-spin" />
                         Placing Bet...
                       </>
                     ) : (
@@ -303,6 +310,10 @@ export default function CryptoDetail() {
                 </div>
               </CardContent>
             </Card>
+
+            <div className="lg:hidden">
+              <LiveBets roundId={round?.id || null} crypto={upperSymbol} />
+            </div>
           </div>
         </div>
       </div>

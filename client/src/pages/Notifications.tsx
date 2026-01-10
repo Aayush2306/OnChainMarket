@@ -39,7 +39,7 @@ export default function Notifications() {
   });
 
   const notifications = data || [];
-  const completedBets = notifications.filter(n => 
+  const completedBets = notifications.filter((n: Notification) => 
     n.status === "won" || n.status === "lost" || n.result === "won" || n.result === "lost" || n.profit !== undefined
   );
 
@@ -55,14 +55,14 @@ export default function Notifications() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen py-8">
+      <div className="min-h-screen py-4 sm:py-8">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 mb-8">
-            <Bell className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold font-display">Notifications</h1>
+          <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+            <Bell className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+            <h1 className="text-2xl sm:text-3xl font-bold font-display">Notifications</h1>
           </div>
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <div className="flex items-center justify-center py-8 sm:py-12">
+            <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-muted-foreground" />
           </div>
         </div>
       </div>
@@ -70,30 +70,30 @@ export default function Notifications() {
   }
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-4 sm:py-8">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <Bell className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold font-display">Notifications</h1>
+        <div className="flex items-center justify-between mb-6 sm:mb-8 gap-2">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Bell className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+            <h1 className="text-2xl sm:text-3xl font-bold font-display">Notifications</h1>
           </div>
           {completedBets.length > 0 && (
-            <Badge variant="secondary">{completedBets.length} results</Badge>
+            <Badge variant="secondary" className="text-xs sm:text-sm">{completedBets.length} results</Badge>
           )}
         </div>
 
         {completedBets.length === 0 ? (
           <Card>
-            <CardContent className="py-12 text-center">
-              <Bell className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
-              <p className="text-lg font-medium mb-2">No Notifications Yet</p>
-              <p className="text-muted-foreground">
+            <CardContent className="py-8 sm:py-12 text-center">
+              <Bell className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-3 sm:mb-4 text-muted-foreground/50" />
+              <p className="text-base sm:text-lg font-medium mb-1 sm:mb-2">No Notifications Yet</p>
+              <p className="text-sm sm:text-base text-muted-foreground">
                 Your bet results will appear here once they're settled
               </p>
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {completedBets.map((n, index) => {
               const isWin = n.status === "won" || n.result === "won";
               const isUp = n.direction?.toLowerCase() === "up" || n.direction?.toLowerCase() === "higher";
@@ -106,46 +106,46 @@ export default function Notifications() {
                   className={`hover-elevate transition-all ${isWin ? "border-win/30" : "border-loss/30"}`}
                   data-testid={`notification-${index}`}
                 >
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-4">
-                      <div className={`flex h-12 w-12 items-center justify-center rounded-full ${isWin ? "bg-win/10" : "bg-loss/10"}`}>
+                  <CardContent className="p-3 sm:p-4">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full shrink-0 ${isWin ? "bg-win/10" : "bg-loss/10"}`}>
                         {isWin ? (
-                          <CheckCircle2 className="h-6 w-6 text-win" />
+                          <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-win" />
                         ) : (
-                          <XCircle className="h-6 w-6 text-loss" />
+                          <XCircle className="h-5 w-5 sm:h-6 sm:w-6 text-loss" />
                         )}
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className={`font-semibold ${isWin ? "text-win" : "text-loss"}`}>
+                        <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-0.5 sm:mb-1">
+                          <span className={`font-semibold text-sm sm:text-base ${isWin ? "text-win" : "text-loss"}`}>
                             {isWin ? "You Won!" : "You Lost"}
                           </span>
-                          <Badge variant="outline" className="text-xs">
-                            <Bitcoin className="h-3 w-3 mr-1" />
+                          <Badge variant="outline" className="text-[10px] sm:text-xs px-1.5 sm:px-2">
+                            <Bitcoin className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
                             {symbol}
                           </Badge>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground">
                           {n.direction && (
                             <>
-                              <span className="flex items-center gap-1">
-                                {isUp ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                              <span className="flex items-center gap-0.5 sm:gap-1">
+                                {isUp ? <TrendingUp className="h-2.5 w-2.5 sm:h-3 sm:w-3" /> : <TrendingDown className="h-2.5 w-2.5 sm:h-3 sm:w-3" />}
                                 {n.direction.toUpperCase()}
                               </span>
                               <span>•</span>
                             </>
                           )}
-                          <span>{formatDate(n.resolved_at || n.created_at)}</span>
+                          <span className="truncate">{formatDate(n.resolved_at || n.created_at)}</span>
                         </div>
                       </div>
 
-                      <div className="text-right">
-                        <div className={`font-mono font-bold text-lg ${isWin ? "text-win" : "text-loss"}`}>
+                      <div className="text-right shrink-0">
+                        <div className={`font-mono font-bold text-base sm:text-lg ${isWin ? "text-win" : "text-loss"}`}>
                           {isWin ? "+" : "-"}{isWin ? winAmount : n.amount}
                         </div>
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground justify-end">
-                          <Coins className="h-3 w-3" />
+                        <div className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-xs text-muted-foreground justify-end">
+                          <Coins className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                           Bet: {n.amount}
                         </div>
                       </div>
@@ -158,27 +158,27 @@ export default function Notifications() {
         )}
 
         {completedBets.length > 0 && (
-          <Card className="mt-8">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Summary</CardTitle>
+          <Card className="mt-6 sm:mt-8">
+            <CardHeader className="pb-2 sm:pb-3">
+              <CardTitle className="text-base sm:text-lg">Summary</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-3 gap-4 text-center">
+            <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
                 <div>
-                  <p className="text-2xl font-bold font-mono">{completedBets.length}</p>
-                  <p className="text-xs text-muted-foreground">Total Results</p>
+                  <p className="text-xl sm:text-2xl font-bold font-mono">{completedBets.length}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground">Total Results</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold font-mono text-win">
+                  <p className="text-xl sm:text-2xl font-bold font-mono text-win">
                     {completedBets.filter(n => n.status === "won" || n.result === "won").length}
                   </p>
-                  <p className="text-xs text-muted-foreground">Wins</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground">Wins</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold font-mono text-loss">
+                  <p className="text-xl sm:text-2xl font-bold font-mono text-loss">
                     {completedBets.filter(n => n.status === "lost" || n.result === "lost").length}
                   </p>
-                  <p className="text-xs text-muted-foreground">Losses</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground">Losses</p>
                 </div>
               </div>
             </CardContent>
