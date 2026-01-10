@@ -30,20 +30,14 @@ interface Notification {
   resolved_at?: string;
 }
 
-interface NotificationsResponse {
-  notifications?: Notification[];
-  results?: Notification[];
-  bets?: Notification[];
-}
-
 export default function Notifications() {
-  const { data, isLoading } = useQuery<NotificationsResponse>({
+  const { data, isLoading } = useQuery<Notification[]>({
     queryKey: ["/api/notifications"],
-    queryFn: () => api.getNotifications() as Promise<NotificationsResponse>,
+    queryFn: () => api.getNotifications() as Promise<Notification[]>,
     refetchInterval: 30000,
   });
 
-  const notifications = data?.notifications || data?.results || data?.bets || [];
+  const notifications = data || [];
   const completedBets = notifications.filter(n => 
     n.status === "won" || n.status === "lost" || n.result === "won" || n.result === "lost" || n.profit !== undefined
   );
