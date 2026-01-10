@@ -14,15 +14,10 @@ import {
   TrendingDown, 
   Clock, 
   Coins,
-  Loader2,
-  Rocket,
-  GraduationCap
+  Loader2
 } from "lucide-react";
 
-const iconMap: Record<string, typeof Rocket> = {
-  Rocket: Rocket,
-  GraduationCap: GraduationCap,
-};
+import pumpLogo from "@/assets/pump.png";
 
 interface OnchainCardProps {
   category: string;
@@ -39,8 +34,6 @@ function OnchainCard({ category, config }: OnchainCardProps) {
   const [amount, setAmount] = useState("");
   const [selectedPrediction, setSelectedPrediction] = useState<"higher" | "lower" | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
-
-  const Icon = iconMap[config.icon] || Rocket;
 
   const { data: round, isLoading } = useQuery<OnchainRound | null>({
     queryKey: ["/api/onchain/round", category],
@@ -129,9 +122,7 @@ function OnchainCard({ category, config }: OnchainCardProps) {
       <Card>
         <CardHeader>
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10">
-              <Icon className="h-5 w-5 text-violet-500" />
-            </div>
+            <img src={pumpLogo} alt="pump.fun" className="h-10 w-10 rounded-lg" />
             <div>
               <CardTitle className="text-lg">{config.name}</CardTitle>
               <CardDescription>{config.description}</CardDescription>
@@ -152,9 +143,7 @@ function OnchainCard({ category, config }: OnchainCardProps) {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10">
-              <Icon className="h-5 w-5 text-violet-500" />
-            </div>
+            <img src={pumpLogo} alt="pump.fun" className="h-10 w-10 rounded-lg" />
             <div>
               <CardTitle className="text-lg">{config.name}</CardTitle>
               <CardDescription>{config.description}</CardDescription>

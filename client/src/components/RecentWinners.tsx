@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Coins, TrendingUp, Bitcoin, Link2, Sparkles } from "lucide-react";
 import type { Winner } from "@shared/schema";
+import profileImg from "@/assets/profile.png";
 
 const typeIcons: Record<string, typeof Bitcoin> = {
   crypto: Bitcoin,
@@ -84,6 +85,7 @@ export function RecentWinners() {
                   data-testid={`winner-${index}`}
                 >
                   <Avatar className="h-10 w-10 border-2 border-win/20">
+                    <AvatarImage src={profileImg} alt={winner.username} />
                     <AvatarFallback className="bg-win/10 text-win font-semibold">
                       {winner.username.charAt(0).toUpperCase()}
                     </AvatarFallback>

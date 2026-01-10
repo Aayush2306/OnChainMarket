@@ -18,6 +18,26 @@ import {
   Building2
 } from "lucide-react";
 
+import appleLogo from "@/assets/coins/apple.svg";
+import googleLogo from "@/assets/coins/google.svg";
+import teslaLogo from "@/assets/coins/tesla.svg";
+import microsoftLogo from "@/assets/coins/microsoft.svg";
+import amazonLogo from "@/assets/coins/amazon.svg";
+import metaLogo from "@/assets/coins/meta.svg";
+import netflixLogo from "@/assets/coins/netflix.svg";
+import nvidiaLogo from "@/assets/coins/nvidia.svg";
+
+const stockLogos: Record<string, string> = {
+  AAPL: appleLogo,
+  GOOGL: googleLogo,
+  TSLA: teslaLogo,
+  MSFT: microsoftLogo,
+  AMZN: amazonLogo,
+  META: metaLogo,
+  NFLX: netflixLogo,
+  NVDA: nvidiaLogo,
+};
+
 interface StockCardProps {
   symbol: string;
   name: string;
@@ -125,14 +145,20 @@ function StockCard({ symbol, name }: StockCardProps) {
   }
 
   const isExpired = timeLeft <= 0;
+  const logo = stockLogos[symbol];
 
   return (
     <Card className="hover-elevate transition-all" data-testid={`stock-card-${symbol}`}>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="text-lg font-semibold">{symbol}</CardTitle>
-            <p className="text-sm text-muted-foreground truncate max-w-[140px]">{name}</p>
+          <div className="flex items-center gap-3">
+            {logo && (
+              <img src={logo} alt={symbol} className="h-8 w-8" />
+            )}
+            <div>
+              <CardTitle className="text-lg font-semibold">{symbol}</CardTitle>
+              <p className="text-sm text-muted-foreground truncate max-w-[140px]">{name}</p>
+            </div>
           </div>
           <Badge 
             variant={isExpired ? "destructive" : "secondary"}

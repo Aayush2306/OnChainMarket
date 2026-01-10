@@ -18,6 +18,30 @@ import {
   RefreshCw
 } from "lucide-react";
 
+import btcLogo from "@/assets/coins/btc.svg";
+import ethLogo from "@/assets/coins/eth.svg";
+import solLogo from "@/assets/coins/sol.svg";
+import bnbLogo from "@/assets/coins/bnb.svg";
+import xrpLogo from "@/assets/coins/xrp.svg";
+import adaLogo from "@/assets/coins/ada.svg";
+import dogeLogo from "@/assets/coins/doge.svg";
+import maticLogo from "@/assets/coins/matic.svg";
+import dotLogo from "@/assets/coins/dot.svg";
+import avaxLogo from "@/assets/coins/avax.svg";
+
+const coinLogos: Record<string, string> = {
+  BTC: btcLogo,
+  ETH: ethLogo,
+  SOL: solLogo,
+  BNB: bnbLogo,
+  XRP: xrpLogo,
+  ADA: adaLogo,
+  DOGE: dogeLogo,
+  MATIC: maticLogo,
+  DOT: dotLogo,
+  AVAX: avaxLogo,
+};
+
 interface CryptoCardProps {
   symbol: string;
   name: string;
@@ -120,14 +144,20 @@ function CryptoCard({ symbol, name }: CryptoCardProps) {
   }
 
   const isExpired = timeLeft <= 0;
+  const logo = coinLogos[symbol];
 
   return (
     <Card className="hover-elevate transition-all" data-testid={`crypto-card-${symbol}`}>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="text-lg font-semibold">{symbol}</CardTitle>
-            <p className="text-sm text-muted-foreground">{name}</p>
+          <div className="flex items-center gap-3">
+            {logo && (
+              <img src={logo} alt={symbol} className="h-8 w-8" />
+            )}
+            <div>
+              <CardTitle className="text-lg font-semibold">{symbol}</CardTitle>
+              <p className="text-sm text-muted-foreground">{name}</p>
+            </div>
           </div>
           <Badge 
             variant={isExpired ? "destructive" : timeLeft < 10 ? "destructive" : "secondary"}

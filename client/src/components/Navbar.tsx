@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
+import mainLogo from "@/assets/main-logo.png";
+import profileImg from "@/assets/profile.png";
 
 export function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -36,9 +38,7 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 hover-elevate rounded-lg px-2 py-1">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-chart-2">
-              <span className="text-lg font-bold text-primary-foreground">P</span>
-            </div>
+            <img src={mainLogo} alt="PredictGram" className="h-8 w-8 rounded-lg" />
             <span className="font-display text-xl font-bold tracking-tight" data-testid="logo-text">
               PredictGram
             </span>
@@ -75,7 +75,7 @@ export function Navbar() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="rounded-full" data-testid="button-profile-menu">
                       <Avatar className="h-9 w-9 border-2 border-primary/20">
-                        <AvatarImage src="/profile-avatar.png" alt={user?.username || "User"} />
+                        <AvatarImage src={profileImg} alt={user?.username || "User"} />
                         <AvatarFallback className="bg-primary/10 text-primary font-semibold">
                           {user?.username?.charAt(0).toUpperCase() || "U"}
                         </AvatarFallback>

@@ -18,6 +18,7 @@ import {
   Check,
   Sparkles
 } from "lucide-react";
+import profileImg from "@/assets/profile.png";
 
 export default function Profile() {
   const { user } = useAuth();
@@ -54,7 +55,7 @@ export default function Profile() {
           <CardContent className="relative px-6 pb-6">
             <div className="flex flex-col sm:flex-row sm:items-end gap-4 -mt-12">
               <Avatar className="h-24 w-24 border-4 border-card shadow-lg">
-                <AvatarImage src="/profile-avatar.png" alt={user?.username || "User"} />
+                <AvatarImage src={profileImg} alt={user?.username || "User"} />
                 <AvatarFallback className="bg-primary text-primary-foreground text-3xl font-bold">
                   {user?.username?.charAt(0).toUpperCase() || "U"}
                 </AvatarFallback>
