@@ -12,6 +12,7 @@ declare module "http" {
   }
 }
 
+// Parse JSON body for all requests (needed for API forwarding)
 app.use(
   express.json({
     verify: (req, _res, buf) => {
