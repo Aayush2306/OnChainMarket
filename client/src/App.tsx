@@ -9,12 +9,16 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import CryptoBetting from "@/pages/CryptoBetting";
+import CryptoDetail from "@/pages/CryptoDetail";
 import StockBetting from "@/pages/StockBetting";
+import StockDetail from "@/pages/StockDetail";
 import OnchainBetting from "@/pages/OnchainBetting";
 import CustomBetting from "@/pages/CustomBetting";
+import CustomBetDetail from "@/pages/CustomBetDetail";
 import Stats from "@/pages/Stats";
 import Leaderboard from "@/pages/Leaderboard";
 import Profile from "@/pages/Profile";
+import Notifications from "@/pages/Notifications";
 import { Loader2 } from "lucide-react";
 
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
@@ -43,14 +47,23 @@ function Router() {
       <Route path="/crypto">
         {() => <ProtectedRoute component={CryptoBetting} />}
       </Route>
+      <Route path="/crypto/:symbol">
+        {() => <ProtectedRoute component={CryptoDetail} />}
+      </Route>
       <Route path="/stocks">
         {() => <ProtectedRoute component={StockBetting} />}
+      </Route>
+      <Route path="/stocks/:symbol">
+        {() => <ProtectedRoute component={StockDetail} />}
       </Route>
       <Route path="/onchain">
         {() => <ProtectedRoute component={OnchainBetting} />}
       </Route>
       <Route path="/custom">
         {() => <ProtectedRoute component={CustomBetting} />}
+      </Route>
+      <Route path="/custom/:id">
+        {() => <ProtectedRoute component={CustomBetDetail} />}
       </Route>
       <Route path="/stats">
         {() => <ProtectedRoute component={Stats} />}
@@ -60,6 +73,9 @@ function Router() {
       </Route>
       <Route path="/profile">
         {() => <ProtectedRoute component={Profile} />}
+      </Route>
+      <Route path="/notifications">
+        {() => <ProtectedRoute component={Notifications} />}
       </Route>
       <Route component={NotFound} />
     </Switch>

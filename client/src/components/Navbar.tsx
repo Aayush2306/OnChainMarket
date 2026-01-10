@@ -16,7 +16,8 @@ import {
   LogOut, 
   User,
   Menu,
-  X
+  X,
+  Bell
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
@@ -63,6 +64,12 @@ export function Navbar() {
                 <Link href="/leaderboard">
                   <Button variant="ghost" size="icon" className="rounded-full" data-testid="button-leaderboard">
                     <Trophy className="h-5 w-5" />
+                  </Button>
+                </Link>
+
+                <Link href="/notifications">
+                  <Button variant="ghost" size="icon" className="rounded-full" data-testid="button-notifications">
+                    <Bell className="h-5 w-5" />
                   </Button>
                 </Link>
 
@@ -162,6 +169,13 @@ export function Navbar() {
                 <Button variant="ghost" className="w-full justify-start gap-2">
                   <User className="h-4 w-4" />
                   Profile
+                </Button>
+              </Link>
+
+              <Link href="/notifications" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <Bell className="h-4 w-4" />
+                  Notifications
                 </Button>
               </Link>
               

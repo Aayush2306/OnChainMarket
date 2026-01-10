@@ -1,21 +1,15 @@
 import { useState, useEffect } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
-import { queryClient } from "@/lib/queryClient";
 import { STOCK_MAP, type CryptoRound } from "@shared/schema";
 import { 
-  TrendingUp, 
-  TrendingDown, 
   Clock, 
-  Coins,
-  Loader2,
-  Building2
+  Building2,
+  ArrowRight
 } from "lucide-react";
 
 import appleLogo from "@/assets/coins/apple.svg";
@@ -44,10 +38,6 @@ interface StockCardProps {
 }
 
 function StockCard({ symbol, name }: StockCardProps) {
-  const { toast } = useToast();
-  const { user, refreshUser } = useAuth();
-  const [amount, setAmount] = useState("");
-  const [selectedDirection, setSelectedDirection] = useState<"up" | "down" | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
 
   const { data: round, isLoading } = useQuery<CryptoRound | null>({
@@ -64,23 +54,6 @@ function StockCard({ symbol, name }: StockCardProps) {
     refetchInterval: 30000,
   });
 
-  const placeBetMutation = useMutation({
-    mutationFn: async ({ roundId, direction, betAmount }: { roundId: number; direction: string; betAmount: number }) => {
-      return api.placeBet(roundId, symbol, direction, betAmount);
-    },
-    onSuccess: () => {
-      toast({ title: "Bet placed successfully!" });
-      setAmount("");
-      setSelectedDirection(null);
-      refreshUser();
-      queryClient.invalidateQueries({ queryKey: ["/api/rounds", symbol] });
-    },
-    onError: (err) => {
-      const message = err instanceof Error ? err.message : "Failed to place bet";
-      toast({ title: message, variant: "destructive" });
-    },
-  });
-
   useEffect(() => {
     if (!round) return;
 
@@ -94,23 +67,6 @@ function StockCard({ symbol, name }: StockCardProps) {
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
   }, [round]);
-
-  const handlePlaceBet = () => {
-    if (!round || !selectedDirection || !amount) return;
-
-    const betAmount = parseInt(amount);
-    if (isNaN(betAmount) || betAmount <= 0) {
-      toast({ title: "Invalid amount", variant: "destructive" });
-      return;
-    }
-
-    if (user && betAmount > user.credits) {
-      toast({ title: "Insufficient credits", variant: "destructive" });
-      return;
-    }
-
-    placeBetMutation.mutate({ roundId: round.id, direction: selectedDirection, betAmount });
-  };
 
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
@@ -148,113 +104,45 @@ function StockCard({ symbol, name }: StockCardProps) {
   const logo = stockLogos[symbol];
 
   return (
-    <Card className="hover-elevate transition-all" data-testid={`stock-card-${symbol}`}>
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {logo && (
-              <img src={logo} alt={symbol} className="h-8 w-8" />
-            )}
-            <div>
-              <CardTitle className="text-lg font-semibold">{symbol}</CardTitle>
-              <p className="text-sm text-muted-foreground truncate max-w-[140px]">{name}</p>
+    <Link href={`/stocks/${symbol.toLowerCase()}`}>
+      <Card className="hover-elevate transition-all cursor-pointer group" data-testid={`stock-card-${symbol}`}>
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {logo ? (
+                <img src={logo} alt={symbol} className="h-10 w-10" />
+              ) : (
+                <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                  <Building2 className="h-5 w-5 text-emerald-500" />
+                </div>
+              )}
+              <div>
+                <CardTitle className="text-lg font-semibold">{symbol}</CardTitle>
+                <p className="text-sm text-muted-foreground truncate max-w-[140px]">{name}</p>
+              </div>
             </div>
+            <Badge variant={isExpired ? "destructive" : "secondary"}>
+              <Clock className="h-3 w-3 mr-1" />
+              {isExpired ? "Ended" : formatTime(timeLeft)}
+            </Badge>
           </div>
-          <Badge 
-            variant={isExpired ? "destructive" : "secondary"}
-          >
-            <Clock className="h-3 w-3 mr-1" />
-            {isExpired ? "Ended" : formatTime(timeLeft)}
-          </Badge>
-        </div>
-      </CardHeader>
+        </CardHeader>
 
-      <CardContent className="space-y-4">
-        <div className="text-center py-2">
-          <p className="text-sm text-muted-foreground">Opening Price</p>
-          <p className="text-3xl font-bold font-mono tabular-nums">
-            ${round.start_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </p>
-        </div>
+        <CardContent className="space-y-4">
+          <div className="text-center py-2">
+            <p className="text-sm text-muted-foreground">Opening Price</p>
+            <p className="text-3xl font-bold font-mono tabular-nums">
+              ${round.start_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </p>
+          </div>
 
-        <div className="grid grid-cols-2 gap-2">
-          <Button
-            variant={selectedDirection === "up" ? "default" : "outline"}
-            className={`h-14 flex-col gap-1 ${selectedDirection === "up" ? "bg-win hover:bg-win/90 border-win" : ""}`}
-            onClick={() => setSelectedDirection("up")}
-            disabled={isExpired}
-            data-testid={`button-higher-${symbol}`}
-          >
-            <TrendingUp className="h-5 w-5" />
-            <span className="text-xs">HIGHER</span>
+          <Button className="w-full gap-2 group-hover:gap-3 transition-all" disabled={isExpired}>
+            {isExpired ? "Market Closed" : "Trade Now"}
+            <ArrowRight className="h-4 w-4" />
           </Button>
-          <Button
-            variant={selectedDirection === "down" ? "default" : "outline"}
-            className={`h-14 flex-col gap-1 ${selectedDirection === "down" ? "bg-loss hover:bg-loss/90 border-loss" : ""}`}
-            onClick={() => setSelectedDirection("down")}
-            disabled={isExpired}
-            data-testid={`button-lower-${symbol}`}
-          >
-            <TrendingDown className="h-5 w-5" />
-            <span className="text-xs">LOWER</span>
-          </Button>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Coins className="h-4 w-4 text-warning" />
-            <Input
-              type="number"
-              placeholder="Amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="font-mono"
-              disabled={isExpired}
-              data-testid={`input-amount-${symbol}`}
-            />
-          </div>
-          <div className="flex gap-1">
-            {[10, 50, 100].map((val) => (
-              <Button
-                key={val}
-                variant="outline"
-                size="sm"
-                className="flex-1 text-xs"
-                onClick={() => setAmount(val.toString())}
-                disabled={isExpired}
-              >
-                {val}
-              </Button>
-            ))}
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex-1 text-xs"
-              onClick={() => setAmount(user?.credits?.toString() || "0")}
-              disabled={isExpired}
-            >
-              MAX
-            </Button>
-          </div>
-        </div>
-
-        <Button
-          className="w-full"
-          disabled={!selectedDirection || !amount || isExpired || placeBetMutation.isPending}
-          onClick={handlePlaceBet}
-          data-testid={`button-bet-${symbol}`}
-        >
-          {placeBetMutation.isPending ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Placing Bet...
-            </>
-          ) : (
-            "Place Bet"
-          )}
-        </Button>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
 
@@ -265,7 +153,7 @@ export default function StockBetting() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold font-display mb-2">Stock Betting</h1>
           <p className="text-muted-foreground">
-            Predict if stock prices will close higher or lower than the opening price
+            Select a stock to view the chart and place your bet
           </p>
           <Badge variant="secondary" className="mt-2">
             Market Hours: Mon-Fri 9:30 AM - 4:00 PM EST

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -24,19 +25,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/api";
 import { queryClient } from "@/lib/queryClient";
 import { createCustomBetSchema, type CustomBetRound } from "@shared/schema";
 import { 
-  TrendingUp, 
-  TrendingDown, 
   Clock, 
-  Coins,
   Loader2,
   Plus,
   Sparkles,
-  Users
+  Users,
+  ArrowRight
 } from "lucide-react";
 
 function CreateBetForm() {
@@ -157,10 +155,6 @@ interface CustomBetCardProps {
 }
 
 function CustomBetCard({ bet }: CustomBetCardProps) {
-  const { toast } = useToast();
-  const { user, refreshUser } = useAuth();
-  const [amount, setAmount] = useState("");
-  const [selectedPrediction, setSelectedPrediction] = useState<"higher" | "lower" | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
@@ -175,39 +169,6 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
     return () => clearInterval(interval);
   }, [bet.end_time]);
 
-  const placeBetMutation = useMutation({
-    mutationFn: ({ prediction, betAmount }: { prediction: string; betAmount: number }) =>
-      api.placeCustomBet(bet.id, prediction, betAmount),
-    onSuccess: () => {
-      toast({ title: "Bet placed successfully!" });
-      setAmount("");
-      setSelectedPrediction(null);
-      refreshUser();
-      queryClient.invalidateQueries({ queryKey: ["/api/custom-bet/active"] });
-    },
-    onError: (err) => {
-      const message = err instanceof Error ? err.message : "Failed to place bet";
-      toast({ title: message, variant: "destructive" });
-    },
-  });
-
-  const handlePlaceBet = () => {
-    if (!selectedPrediction || !amount) return;
-
-    const betAmount = parseInt(amount);
-    if (isNaN(betAmount) || betAmount <= 0) {
-      toast({ title: "Invalid amount", variant: "destructive" });
-      return;
-    }
-
-    if (user && betAmount > user.credits) {
-      toast({ title: "Insufficient credits", variant: "destructive" });
-      return;
-    }
-
-    placeBetMutation.mutate({ prediction: selectedPrediction, betAmount });
-  };
-
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -215,103 +176,60 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
   };
 
   const isExpired = timeLeft <= 0;
-  const bettingClosed = timeLeft < 300;
 
   return (
-    <Card className="hover-elevate transition-all" data-testid={`custom-bet-${bet.id}`}>
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-pink-500/10">
-              <Sparkles className="h-4 w-4 text-pink-500" />
-            </div>
-            <div>
-              <CardTitle className="text-base">
-                {bet.token_symbol || "Token"}
-              </CardTitle>
-              <p className="text-xs text-muted-foreground truncate max-w-[120px]">
-                {bet.token_name}
-              </p>
-            </div>
-          </div>
-          <Badge 
-            variant={isExpired ? "destructive" : bettingClosed ? "secondary" : "default"}
-            className={timeLeft < 60 && !isExpired ? "animate-countdown-pulse" : ""}
-          >
-            <Clock className="h-3 w-3 mr-1" />
-            {isExpired ? "Ended" : formatTime(timeLeft)}
-          </Badge>
-        </div>
-      </CardHeader>
-
-      <CardContent className="space-y-3">
-        <div className="grid grid-cols-2 gap-2 text-center text-sm">
-          <div className="p-2 rounded bg-muted/50">
-            <p className="text-xs text-muted-foreground">Start Price</p>
-            <p className="font-mono font-semibold">${bet.start_price.toFixed(6)}</p>
-          </div>
-          <div className="p-2 rounded bg-muted/50">
-            <p className="text-xs text-muted-foreground">Pool</p>
-            <p className="font-mono font-semibold">{bet.total_pool.toLocaleString()}</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Users className="h-3 w-3" />
-          <span>Created by @{bet.creator_username}</span>
-          <span className="ml-auto">{bet.duration_minutes}m</span>
-        </div>
-
-        {!isExpired && !bettingClosed && (
-          <>
-            <div className="grid grid-cols-2 gap-2">
-              <Button
-                variant={selectedPrediction === "higher" ? "default" : "outline"}
-                className={`h-10 gap-1 ${selectedPrediction === "higher" ? "bg-win hover:bg-win/90 border-win" : ""}`}
-                onClick={() => setSelectedPrediction("higher")}
-                size="sm"
-              >
-                <TrendingUp className="h-4 w-4" />
-                Higher
-              </Button>
-              <Button
-                variant={selectedPrediction === "lower" ? "default" : "outline"}
-                className={`h-10 gap-1 ${selectedPrediction === "lower" ? "bg-loss hover:bg-loss/90 border-loss" : ""}`}
-                onClick={() => setSelectedPrediction("lower")}
-                size="sm"
-              >
-                <TrendingDown className="h-4 w-4" />
-                Lower
-              </Button>
-            </div>
-
+    <Link href={`/custom/${bet.id}`}>
+      <Card className="hover-elevate transition-all cursor-pointer group" data-testid={`custom-bet-${bet.id}`}>
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Coins className="h-4 w-4 text-warning shrink-0" />
-              <Input
-                type="number"
-                placeholder="Amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="font-mono text-sm"
-              />
-              <Button
-                size="sm"
-                disabled={!selectedPrediction || !amount || placeBetMutation.isPending}
-                onClick={handlePlaceBet}
-              >
-                {placeBetMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Bet"}
-              </Button>
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500/10">
+                <Sparkles className="h-5 w-5 text-pink-500" />
+              </div>
+              <div>
+                <CardTitle className="text-base">
+                  {bet.token_symbol || "Token"}
+                </CardTitle>
+                <p className="text-xs text-muted-foreground truncate max-w-[120px]">
+                  {bet.token_name}
+                </p>
+              </div>
             </div>
-          </>
-        )}
-
-        {bettingClosed && !isExpired && (
-          <div className="text-center py-2 text-sm text-muted-foreground">
-            Betting closed. Waiting for result...
+            <Badge 
+              variant={isExpired ? "destructive" : "secondary"}
+              className={timeLeft < 60 && !isExpired ? "animate-countdown-pulse" : ""}
+            >
+              <Clock className="h-3 w-3 mr-1" />
+              {isExpired ? "Ended" : formatTime(timeLeft)}
+            </Badge>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </CardHeader>
+
+        <CardContent className="space-y-3">
+          <div className="grid grid-cols-2 gap-2 text-center text-sm">
+            <div className="p-2 rounded bg-muted/50">
+              <p className="text-xs text-muted-foreground">Start Price</p>
+              <p className="font-mono font-semibold">${bet.start_price.toFixed(6)}</p>
+            </div>
+            <div className="p-2 rounded bg-muted/50">
+              <p className="text-xs text-muted-foreground">Pool</p>
+              <p className="font-mono font-semibold">{bet.total_pool.toLocaleString()}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Users className="h-3 w-3" />
+            <span>Created by @{bet.creator_username}</span>
+            <span className="ml-auto">{bet.duration_minutes}m</span>
+          </div>
+
+          <Button className="w-full gap-2 group-hover:gap-3 transition-all" disabled={isExpired}>
+            {isExpired ? "View Details" : "Trade Now"}
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
 
