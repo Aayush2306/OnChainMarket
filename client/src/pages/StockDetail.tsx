@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/api";
 import { queryClient } from "@/lib/queryClient";
+import { useSocket } from "@/context/SocketContext";
 import { STOCK_MAP, type CryptoRound } from "@shared/schema";
 import { TradingViewChart } from "@/components/TradingViewChart";
 import { LiveBets } from "@/components/LiveBets";
@@ -50,9 +51,21 @@ export default function StockDetail() {
   
   const { toast } = useToast();
   const { user, refreshUser } = useAuth();
+  const { joinRoom, leaveRoom, isConnected } = useSocket();
   const [amount, setAmount] = useState("");
   const [selectedDirection, setSelectedDirection] = useState<"up" | "down" | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
+
+  useEffect(() => {
+    if (isConnected && upperSymbol) {
+      joinRoom(upperSymbol);
+    }
+    return () => {
+      if (upperSymbol) {
+        leaveRoom(upperSymbol);
+      }
+    };
+  }, [isConnected, upperSymbol, joinRoom, leaveRoom]);
 
   const { data: round, isLoading } = useQuery<CryptoRound | null>({
     queryKey: ["/api/rounds", upperSymbol],
@@ -65,7 +78,7 @@ export default function StockDetail() {
         return null;
       }
     },
-    refetchInterval: 5000,
+    refetchInterval: isConnected ? 30000 : 5000,
   });
 
   const placeBetMutation = useMutation({
