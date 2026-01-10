@@ -1,10 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Coins, TrendingUp, Bitcoin, Link2, Sparkles } from "lucide-react";
 import type { Winner } from "@shared/schema";
-import { api } from "@/lib/api";
 
 const typeIcons: Record<string, typeof Bitcoin> = {
   crypto: Bitcoin,
@@ -29,22 +27,8 @@ const mockWinners: Winner[] = [
 ];
 
 export function RecentWinners() {
-  const { data: winners = mockWinners, isLoading } = useQuery<Winner[]>({
-    queryKey: ["/api/recent-winners"],
-    queryFn: async () => {
-      try {
-        const data = await api.getRecentWinners();
-        if (Array.isArray(data) && data.length > 0) {
-          return data as Winner[];
-        }
-        return mockWinners;
-      } catch {
-        return mockWinners;
-      }
-    },
-    staleTime: 30000,
-    refetchInterval: 30000,
-  });
+  const winners = mockWinners;
+  const isLoading = false;
 
   if (isLoading) {
     return (

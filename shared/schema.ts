@@ -148,7 +148,8 @@ export interface LeaderboardEntry {
 export interface LeaderboardData {
   highest_win_rate: LeaderboardEntry[];
   most_bets: LeaderboardEntry[];
-  most_profit: LeaderboardEntry[];
+  most_credits: LeaderboardEntry[];
+  biggest_losers?: LeaderboardEntry[];
 }
 
 // Winner Types

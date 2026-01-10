@@ -31,7 +31,7 @@ function LeaderboardTable({ entries, type }: LeaderboardTableProps) {
     switch (type) {
       case "win_rate": return `${entry.win_rate}%`;
       case "bets": return entry.total_bets.toString();
-      case "profit": return entry.profit >= 0 ? `+${entry.profit.toLocaleString()}` : entry.profit.toLocaleString();
+      case "profit": return `${entry.credits?.toLocaleString() || 0}`;
     }
   };
 
@@ -210,12 +210,12 @@ export default function Leaderboard() {
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <Coins className="h-5 w-5 text-warning" />
-                  Most Profit
+                  Most Credits
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <LeaderboardTable 
-                  entries={data?.most_profit || []} 
+                  entries={data?.most_credits || []} 
                   type="profit"
                 />
               </CardContent>
