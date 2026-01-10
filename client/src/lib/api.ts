@@ -63,7 +63,7 @@ export const api = {
   getMyStats: () => apiRequest("GET", "/api/my-stats"),
   getLeaderboard: (period: string = "daily") =>
     apiRequest("GET", `/api/leaderboard?period=${period}`),
-  getRecentWinners: () => apiRequest("GET", "/api/recent-winners"),
+  getRecentWinners: () => apiRequest("GET", "/api/recent-wins"),
   
   // On-chain endpoints
   getOnchainRound: (category: string) =>
