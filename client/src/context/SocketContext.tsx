@@ -65,6 +65,9 @@ export function SocketProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (socket && isConnected && user) {
       socket.emit("join_user", { user_id: user.id });
+      return () => {
+        socket.emit("leave_user", { user_id: user.id });
+      };
     }
   }, [socket, isConnected, user]);
 
