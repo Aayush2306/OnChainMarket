@@ -93,12 +93,17 @@ export default function StockDetail() {
       const now = Math.floor(Date.now() / 1000);
       const remaining = round.end_time - now;
       setTimeLeft(Math.max(0, remaining));
+      
+      // When round ends, immediately fetch new round
+      if (remaining <= 0) {
+        queryClient.invalidateQueries({ queryKey: ["/api/rounds", upperSymbol] });
+      }
     };
 
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [round]);
+  }, [round, upperSymbol]);
 
   const handlePlaceBet = async () => {
     if (!round || !selectedDirection || !amount) return;
