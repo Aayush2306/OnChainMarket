@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://price-production-c1cb.up.railway.app";
+// Use relative URLs to proxy through our server, avoiding CORS issues
+const API_BASE_URL = "";
 
 export async function apiRequest<T = unknown>(
   method: string,
