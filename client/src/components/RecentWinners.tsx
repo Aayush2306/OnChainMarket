@@ -1,9 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, Coins, TrendingUp, Bitcoin, Link2, Sparkles } from "lucide-react";
-import type { Winner } from "@shared/schema";
+import { Trophy, Coins, TrendingUp, Bitcoin, Link2, Sparkles, Loader2 } from "lucide-react";
+import { api } from "@/lib/api";
 import profileImg from "@/assets/profile.png";
+
+interface RecentWinner {
+  username: string;
+  amount: number;
+  profit: number;
+  crypto?: string;
+  token_symbol?: string;
+  category?: string;
+  type: string;
+}
 
 const typeIcons: Record<string, typeof Bitcoin> = {
   crypto: Bitcoin,
@@ -19,17 +30,19 @@ const typeColors: Record<string, string> = {
   custom: "text-pink-500",
 };
 
-const mockWinners: Winner[] = [
-  { username: "CryptoKing", amount: 500, profit: 400, crypto: "BTC", type: "crypto" },
-  { username: "DeFiMaster", amount: 200, profit: 160, crypto: "ETH", type: "crypto" },
-  { username: "SolanaFan", amount: 1000, profit: 800, token_symbol: "BONK", type: "custom" },
-  { username: "StockTrader", amount: 300, profit: 240, crypto: "AAPL", type: "stock" },
-  { username: "OnChainDegen", amount: 150, profit: 120, category: "pump.fun", type: "onchain" },
-];
-
 export function RecentWinners() {
-  const winners = mockWinners;
-  const isLoading = false;
+  const { data: winners = [], isLoading } = useQuery<RecentWinner[]>({
+    queryKey: ["/api/recent-winners"],
+    queryFn: async () => {
+      try {
+        const data = await api.getRecentWinners();
+        return data as RecentWinner[];
+      } catch {
+        return [];
+      }
+    },
+    refetchInterval: 30000,
+  });
 
   if (isLoading) {
     return (
@@ -40,19 +53,8 @@ export function RecentWinners() {
             Recent Winners
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="flex items-center gap-3 animate-pulse">
-                <div className="h-10 w-10 rounded-full bg-muted" />
-                <div className="flex-1 space-y-2">
-                  <div className="h-4 w-24 rounded bg-muted" />
-                  <div className="h-3 w-16 rounded bg-muted" />
-                </div>
-                <div className="h-6 w-20 rounded bg-muted" />
-              </div>
-            ))}
-          </div>
+        <CardContent className="flex items-center justify-center py-8">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
         </CardContent>
       </Card>
     );

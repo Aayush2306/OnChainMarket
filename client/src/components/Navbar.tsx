@@ -38,9 +38,9 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 hover-elevate rounded-lg px-2 py-1">
-            <img src={mainLogo} alt="PredictGram" className="h-8 w-8 rounded-lg" />
+            <img src={mainLogo} alt="On-Chain Market" className="h-8 w-8 rounded-lg" />
             <span className="font-display text-xl font-bold tracking-tight" data-testid="logo-text">
-              PredictGram
+              On-Chain Market
             </span>
           </Link>
 

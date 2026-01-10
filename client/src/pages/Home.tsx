@@ -78,25 +78,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <section className="py-16 border-t border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-8 sm:grid-cols-3 text-center">
-            <div className="animate-slide-up" style={{ animationDelay: "0ms" }}>
-              <div className="text-4xl font-bold font-display text-primary mb-2">1.8x</div>
-              <p className="text-muted-foreground">Payout on Wins</p>
-            </div>
-            <div className="animate-slide-up" style={{ animationDelay: "100ms" }}>
-              <div className="text-4xl font-bold font-display text-primary mb-2">60s</div>
-              <p className="text-muted-foreground">Round Duration</p>
-            </div>
-            <div className="animate-slide-up" style={{ animationDelay: "200ms" }}>
-              <div className="text-4xl font-bold font-display text-primary mb-2">10+</div>
-              <p className="text-muted-foreground">Supported Assets</p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
