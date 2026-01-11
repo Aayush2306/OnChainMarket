@@ -1,100 +1,32 @@
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
-import type { User } from "@shared/schema";
-import { api, setAuthToken, clearAuthToken, getAuthToken } from "@/lib/api";
+import { createContext, useContext, type ReactNode } from "react";
+import { useAuth as useReplitAuth } from "@/hooks/use-auth";
+import type { User } from "@shared/models/auth";
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  needsOnboarding: boolean;
-  setNeedsOnboarding: (value: boolean) => void;
-  login: (walletAddress: string, signature: string, name?: string, username?: string) => Promise<void>;
-  logout: () => Promise<void>;
-  refreshUser: () => Promise<void>;
-  walletAddress: string | null;
-  setWalletAddress: (address: string | null) => void;
+  logout: () => void;
+  login: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [needsOnboarding, setNeedsOnboarding] = useState(false);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const { user, isLoading, isAuthenticated, logout } = useReplitAuth();
 
-  const refreshUser = useCallback(async () => {
-    try {
-      const profile = await api.getProfile() as User;
-      setUser(profile);
-    } catch {
-      setUser(null);
-      // Clear invalid token
-      clearAuthToken();
-    }
-  }, []);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      // Check if we have a stored token
-      const hasToken = !!getAuthToken();
-      
-      if (!hasToken) {
-        setIsLoading(false);
-        return;
-      }
-      
-      try {
-        const profile = await api.getProfile() as User;
-        setUser(profile);
-      } catch {
-        setUser(null);
-        // Clear invalid token
-        clearAuthToken();
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    checkAuth();
-  }, []);
-
-  const login = async (walletAddress: string, signature: string, name?: string, username?: string) => {
-    const response = await api.verifySignature(walletAddress, signature, name, username) as User & { token?: string };
-    
-    // Store JWT token if returned (for Safari/iPhone compatibility)
-    if (response.token) {
-      setAuthToken(response.token);
-    }
-    
-    setUser(response);
-    setNeedsOnboarding(false);
-  };
-
-  const logout = async () => {
-    try {
-      await api.logout();
-    } catch {
-      // Ignore errors on logout
-    }
-    // Clear JWT token
-    clearAuthToken();
-    setUser(null);
-    setWalletAddress(null);
+  const login = () => {
+    window.location.href = "/api/login";
   };
 
   return (
     <AuthContext.Provider
       value={{
-        user,
+        user: user ?? null,
         isLoading,
-        isAuthenticated: !!user,
-        needsOnboarding,
-        setNeedsOnboarding,
-        login,
+        isAuthenticated,
         logout,
-        refreshUser,
-        walletAddress,
-        setWalletAddress,
+        login,
       }}
     >
       {children}

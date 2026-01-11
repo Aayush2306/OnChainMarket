@@ -1,4 +1,4 @@
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -20,22 +20,20 @@ import {
   Bell
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { usePhantom } from "@/hooks/usePhantom";
 import { useState } from "react";
 import mainLogo from "@/assets/main-logo.png";
 import profileImg from "@/assets/profile.png";
 
 export function Navbar() {
-  const { user, isAuthenticated, logout } = useAuth();
-  const { disconnect: disconnectPhantom } = usePhantom();
-  const [, setLocation] = useLocation();
+  const { user, isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleLogout = async () => {
-    // Disconnect from Phantom so user can connect a different wallet
-    await disconnectPhantom();
-    await logout();
-    setLocation("/");
+  const handleLogout = () => {
+    window.location.href = "/api/logout";
+  };
+
+  const handleLogin = () => {
+    window.location.href = "/api/login";
   };
 
   return (
@@ -55,7 +53,7 @@ export function Navbar() {
                 <div className="flex items-center gap-2 rounded-full bg-card px-4 py-2 border border-card-border" data-testid="credits-display">
                   <Coins className="h-4 w-4 text-warning" />
                   <span className="font-mono text-sm font-semibold tabular-nums">
-                    {user?.credits?.toLocaleString() || 0}
+                    {(user?.credits ?? 0).toLocaleString()}
                   </span>
                 </div>
 
@@ -86,17 +84,17 @@ export function Navbar() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="rounded-full" data-testid="button-profile-menu">
                       <Avatar className="h-9 w-9 border-2 border-primary/20">
-                        <AvatarImage src={profileImg} alt={user?.username || "User"} />
+                        <AvatarImage src={user?.profileImageUrl || profileImg} alt={user?.firstName || "User"} />
                         <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                          {user?.username?.charAt(0).toUpperCase() || "U"}
+                          {user?.firstName?.charAt(0).toUpperCase() || "U"}
                         </AvatarFallback>
                       </Avatar>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
                     <div className="px-2 py-1.5">
-                      <p className="text-sm font-medium">{user?.name || "User"}</p>
-                      <p className="text-xs text-muted-foreground">@{user?.username}</p>
+                      <p className="text-sm font-medium">{user?.firstName || "User"} {user?.lastName || ""}</p>
+                      <p className="text-xs text-muted-foreground">{user?.email}</p>
                     </div>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
@@ -135,12 +133,10 @@ export function Navbar() {
               </Button>
             </>
           ) : (
-            <Link href="/login">
-              <Button className="gap-2" data-testid="button-login">
-                <Wallet className="h-4 w-4" />
-                Login with Phantom
-              </Button>
-            </Link>
+            <Button className="gap-2" data-testid="button-login" onClick={handleLogin}>
+              <User className="h-4 w-4" />
+              Sign In
+            </Button>
           )}
         </div>
 
@@ -151,7 +147,7 @@ export function Navbar() {
                 <span className="text-sm text-muted-foreground">Credits</span>
                 <div className="flex items-center gap-2">
                   <Coins className="h-4 w-4 text-warning" />
-                  <span className="font-mono font-semibold">{user?.credits?.toLocaleString() || 0}</span>
+                  <span className="font-mono font-semibold">{(user?.credits ?? 0).toLocaleString()}</span>
                 </div>
               </div>
               

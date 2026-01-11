@@ -1,7 +1,10 @@
 import { z } from "zod";
 
-// User Types
-export interface User {
+// Export auth models for Replit Auth integration
+export * from "./models/auth";
+
+// Legacy User Types (for Railway backend compatibility)
+export interface LegacyUser {
   id: string;
   name: string | null;
   username: string | null;
