@@ -1235,6 +1235,41 @@ def place_custom_bet():
         )
 
         conn.commit()
+        
+        # Get updated pool totals for socket emit
+        cursor.execute(
+            """
+            SELECT total_pool,
+                   SUM(CASE WHEN cb.prediction = 'higher' THEN cb.amount ELSE 0 END) as higher_pool,
+                   SUM(CASE WHEN cb.prediction = 'lower' THEN cb.amount ELSE 0 END) as lower_pool,
+                   COUNT(cb.id) as bet_count
+            FROM custom_bet_rounds cbr
+            LEFT JOIN custom_bets cb ON cbr.id = cb.round_id
+            WHERE cbr.id = %s
+            GROUP BY cbr.id
+            """, (round_id,)
+        )
+        pool_data = cursor.fetchone()
+        
+        # Emit custom bet update to room
+        room = f"custom-bet-{round_id}"
+        socketio.emit("custom_bet_update", {
+            "round_id": round_id,
+            "total_pool": pool_data['total_pool'] if pool_data else amount,
+            "higher_pool": pool_data['higher_pool'] if pool_data else 0,
+            "lower_pool": pool_data['lower_pool'] if pool_data else 0,
+            "bet_count": pool_data['bet_count'] if pool_data else 1,
+            "new_bet": {
+                "prediction": prediction,
+                "amount": amount
+            }
+        }, room=room)
+        
+        # Also emit credits update to user
+        socketio.emit("credits_update", {
+            "user_id": user_id,
+            "change": -amount
+        }, room=f"user-{user_id}")
 
     return jsonify({"message": "Bet placed successfully"})
 
@@ -2062,6 +2097,40 @@ def resolve_custom_bet_round(round_id):
 
             conn.commit()
             
+            # Calculate winners/losers counts for socket emit
+            if result == "same":
+                winners_count = 0
+                losers_count = 0
+            else:
+                winners_count = len(winners)
+                losers_count = len(losers)
+            
+            # Emit custom_bet_resolved socket event
+            room = f"custom-bet-{round_id}"
+            socketio.emit("custom_bet_resolved", {
+                "round_id": round_id,
+                "token_symbol": round_data['token_symbol'],
+                "token_ca": round_data['token_ca'],
+                "start_price": start_price,
+                "end_price": end_price,
+                "result": result,
+                "total_pool": total_pool,
+                "winners_count": winners_count,
+                "losers_count": losers_count
+            }, room=room)
+            
+            # Also emit bet_result to each user who placed a bet
+            for bet in all_bets:
+                status = "refunded" if result == "same" else ("won" if bet['prediction'] == result else "lost")
+                socketio.emit("bet_result", {
+                    "type": "custom_bet",
+                    "round_id": round_id,
+                    "token_symbol": round_data['token_symbol'],
+                    "status": status,
+                    "amount": bet['amount'],
+                    "profit": bet.get('profit', 0)
+                }, room=f"user-{bet['user_id']}")
+            
             # Send webhook for custom bet resolution
             send_webhook("custom_bet_resolved", {
                 "event": "custom_bet_resolved",
@@ -2143,7 +2212,25 @@ def handle_user_leave(data):
     if user_id:
         room = f"user-{user_id}"
         leave_room(room)
-        print(f"?? User left {room}")
+        print(f"👋 User left {room}")
+
+
+@socketio.on("join_custom_bet")
+def handle_custom_bet_join(data):
+    round_id = data.get("round_id")
+    if round_id:
+        room = f"custom-bet-{round_id}"
+        join_room(room)
+        print(f"🎯 User joined {room}")
+
+
+@socketio.on("leave_custom_bet")
+def handle_custom_bet_leave(data):
+    round_id = data.get("round_id")
+    if round_id:
+        room = f"custom-bet-{round_id}"
+        leave_room(room)
+        print(f"👋 User left {room}")
 
 
 # Initialize database and start background threads
