@@ -5,7 +5,15 @@
   "installCommand": "npm install",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/:path*",
+      "destination": "https://price-production-c1cb.up.railway.app/api/:path*"
+    },
+    {
+      "source": "/logout",
+      "destination": "https://price-production-c1cb.up.railway.app/logout"
+    },
+    {
+      "source": "/((?!api|logout).*)",
       "destination": "/index.html"
     }
   ]
