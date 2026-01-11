@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import type { User } from "@shared/schema";
-import { api } from "@/lib/api";
+import { api, setAuthToken, clearAuthToken, getAuthToken } from "@/lib/api";
 
 interface AuthContextType {
   user: User | null;
@@ -29,16 +29,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(profile);
     } catch {
       setUser(null);
+      // Clear invalid token
+      clearAuthToken();
     }
   }, []);
 
   useEffect(() => {
     const checkAuth = async () => {
+      // Check if we have a stored token
+      const hasToken = !!getAuthToken();
+      
+      if (!hasToken) {
+        setIsLoading(false);
+        return;
+      }
+      
       try {
         const profile = await api.getProfile() as User;
         setUser(profile);
       } catch {
         setUser(null);
+        // Clear invalid token
+        clearAuthToken();
       } finally {
         setIsLoading(false);
       }
@@ -47,8 +59,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (walletAddress: string, signature: string, name?: string, username?: string) => {
-    const userData = await api.verifySignature(walletAddress, signature, name, username) as User;
-    setUser(userData);
+    const response = await api.verifySignature(walletAddress, signature, name, username) as User & { token?: string };
+    
+    // Store JWT token if returned (for Safari/iPhone compatibility)
+    if (response.token) {
+      setAuthToken(response.token);
+    }
+    
+    setUser(response);
     setNeedsOnboarding(false);
   };
 
@@ -58,6 +76,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch {
       // Ignore errors on logout
     }
+    // Clear JWT token
+    clearAuthToken();
     setUser(null);
     setWalletAddress(null);
   };

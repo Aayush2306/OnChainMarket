@@ -1,0 +1,138 @@
+2026-01-11T12:21:05.935490205Z [inf]  [ROUNDS] Round ended! Fetching end prices...
+2026-01-11T12:21:05.935496416Z [inf]  [PRICES] Fetching prices...
+2026-01-11T12:21:05.935502356Z [inf]  [BINANCE] Got 10 prices in 0.29s
+2026-01-11T12:21:05.935508372Z [inf]  [RESOLUTION] Got prices for 10 cryptos. Resolving all rounds in parallel...
+2026-01-11T12:21:05.935513312Z [inf]    [RESOLVE] BTC Round #2161: 90759.33 -> 90843.39 = UP
+2026-01-11T12:21:05.935522913Z [inf]    [RESOLVE] ETH Round #2162: 3107.67 -> 3109.73 = UP
+2026-01-11T12:21:05.935527831Z [inf]    [RESOLVE] SOL Round #2163: 136.55 -> 136.73 = UP
+2026-01-11T12:21:05.935534492Z [inf]    [RESOLVE] BNB Round #2164: 912.69 -> 912.82 = UP
+2026-01-11T12:21:05.935540899Z [inf]  👋 User left user-2c9iJuvN2cthzkAPc79DVN4zJy3w6rfikTcytRQiaucu
+2026-01-11T12:21:05.937701184Z [inf]  ? User joined user-2c9iJuvN2cthzkAPc79DVN4zJy3w6rfikTcytRQiaucu
+2026-01-11T12:21:05.937707450Z [inf]    [RESOLVE] MATIC Round #2165: 0.3794 -> 0.3794 = SAME
+2026-01-11T12:21:06.225301858Z [inf]    [RESOLVE] XRP Round #2166: 2.0968 -> 2.1014 = UP
+2026-01-11T12:21:08.013800941Z [inf]    [RESOLVE] ADA Round #2167: 0.392 -> 0.3922 = UP
+2026-01-11T12:21:09.154215970Z [inf]    [RESOLVE] DOGE Round #2168: 0.13978 -> 0.14006 = UP
+2026-01-11T12:21:11.167041453Z [inf]    [RESOLVE] DOT Round #2169: 2.113 -> 2.115 = UP
+2026-01-11T12:21:12.279132691Z [inf]    [RESOLVE] AVAX Round #2170: 13.82 -> 13.86 = UP
+2026-01-11T12:21:13.888536084Z [inf]    [BETS] Resolved 0 bets for round #2161
+2026-01-11T12:21:14.989396749Z [inf]    [BETS] Resolved 0 bets for round #2162
+2026-01-11T12:21:16.241766438Z [inf]    [BETS] Resolved 0 bets for round #2163
+2026-01-11T12:21:17.953120765Z [inf]    [BETS] Resolved 0 bets for round #2164
+2026-01-11T12:21:20.095820517Z [inf]    [BETS] Resolved 0 bets for round #2165
+2026-01-11T12:21:21.437300791Z [inf]    [BETS] Resolved 0 bets for round #2166
+2026-01-11T12:21:22.939569020Z [inf]    [BETS] Resolved 0 bets for round #2167
+2026-01-11T12:21:24.293901014Z [inf]    [BETS] Resolved 0 bets for round #2168
+2026-01-11T12:21:25.015775087Z [inf]    [ERROR] Error resolving AVAX: connection pool exhausted
+2026-01-11T12:21:25.506731870Z [inf]    [BETS] Resolved 0 bets for round #2169
+2026-01-11T12:21:25.506740000Z [inf]  [SUCCESS] Resolved 9 rounds in parallel. Pausing exactly 15s before next round starts instantly...
+2026-01-11T12:21:45.508666207Z [inf]  [ROUNDS] Starting new round immediately after pause!
+2026-01-11T12:21:45.508677407Z [inf]  [PRICES] Fetching prices...
+2026-01-11T12:21:45.508684670Z [inf]  [BINANCE] Got 10 prices in 0.10s
+2026-01-11T12:21:47.030206927Z [inf]  [ROUNDS] Round started at 1768134100 and will end at 1768135000
+2026-01-11T12:36:50.794913364Z [inf]  [ROUNDS] Round ended! Fetching end prices...
+2026-01-11T12:36:50.794920459Z [inf]  [PRICES] Fetching prices...
+2026-01-11T12:36:50.794927133Z [inf]  [BINANCE] Got 10 prices in 0.16s
+2026-01-11T12:36:50.795203193Z [inf]  [RESOLUTION] Got prices for 10 cryptos. Resolving all rounds in parallel...
+2026-01-11T12:36:50.795211128Z [inf]    [RESOLVE] BTC Round #2171: 90822.06 -> 90841.59 = UP
+2026-01-11T12:36:50.795217439Z [inf]    [RESOLVE] ETH Round #2172: 3109.1 -> 3108.49 = DOWN
+2026-01-11T12:36:50.795222831Z [inf]    [RESOLVE] SOL Round #2173: 136.75 -> 136.77 = UP
+2026-01-11T12:36:51.598152969Z [inf]    [RESOLVE] BNB Round #2174: 912.75 -> 912.51 = DOWN
+2026-01-11T12:36:52.814558434Z [inf]    [RESOLVE] MATIC Round #2175: 0.3794 -> 0.3794 = SAME
+2026-01-11T12:36:54.535789980Z [inf]    [RESOLVE] XRP Round #2176: 2.1012 -> 2.1002 = DOWN
+2026-01-11T12:36:55.882205464Z [inf]    [RESOLVE] ADA Round #2177: 0.392 -> 0.3919 = DOWN
+2026-01-11T12:36:57.612714093Z [inf]    [RESOLVE] DOGE Round #2178: 0.13998 -> 0.14002 = UP
+2026-01-11T12:36:58.648458835Z [inf]    [RESOLVE] DOT Round #2179: 2.113 -> 2.116 = UP
+2026-01-11T12:36:59.689909127Z [inf]    [RESOLVE] AVAX Round #2180: 13.85 -> 13.83 = DOWN
+2026-01-11T12:37:00.954107034Z [inf]    [BETS] Resolved 0 bets for round #2171
+2026-01-11T12:37:02.167489969Z [inf]    [BETS] Resolved 0 bets for round #2172
+2026-01-11T12:37:03.669668174Z [inf]    [BETS] Resolved 0 bets for round #2173
+2026-01-11T12:37:04.783962120Z [inf]    [BETS] Resolved 0 bets for round #2174
+2026-01-11T12:37:06.710485334Z [inf]    [BETS] Resolved 0 bets for round #2175
+2026-01-11T12:37:07.706224512Z [inf]    [BETS] Resolved 0 bets for round #2176
+2026-01-11T12:37:08.876983619Z [inf]    [BETS] Resolved 0 bets for round #2177
+2026-01-11T12:37:09.993944801Z [inf]    [BETS] Resolved 0 bets for round #2178
+2026-01-11T12:37:11.690434430Z [inf]    [BETS] Resolved 0 bets for round #2179
+2026-01-11T12:37:12.698112686Z [inf]    [BETS] Resolved 0 bets for round #2180
+2026-01-11T12:37:12.698118843Z [inf]  [SUCCESS] Resolved 10 rounds in parallel. Pausing exactly 15s before next round starts instantly...
+2026-01-11T12:37:32.323761414Z [inf]  [ROUNDS] Starting new round immediately after pause!
+2026-01-11T12:37:32.323769580Z [inf]  [PRICES] Fetching prices...
+2026-01-11T12:37:32.323777549Z [inf]  [BINANCE] Got 10 prices in 0.09s
+2026-01-11T12:37:33.857264536Z [inf]  [ROUNDS] Round started at 1768135047 and will end at 1768135947
+2026-01-11T12:48:06.549344049Z [inf]  [AUTH] Generated nonce for wallet AAbfFE2j...Kser
+2026-01-11T12:48:06.549351730Z [inf]  [AUTH] Verify failed: No nonce in session for wallet AAbfFE2j...Kser. Session keys: ['_permanent']
+2026-01-11T12:48:29.690984386Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.169.112:11702 socket shutdown error: [Errno 9] Bad file descriptor[AUTH] Generated nonce for wallet C1YtPjki...X89T
+2026-01-11T12:48:31.652458183Z [inf]  [AUTH] Verify failed: No nonce in session for wallet C1YtPjki...X89T. Session keys: ['_permanent']
+2026-01-11T12:48:37.063950039Z [inf]  [AUTH] Generated nonce for wallet C1YtPjki...X89T
+2026-01-11T12:48:38.610434957Z [inf]  [AUTH] Verify failed: No nonce in session for wallet C1YtPjki...X89T. Session keys: ['_permanent']
+2026-01-11T12:48:44.057288942Z [inf]  [AUTH] Generated nonce for wallet C1YtPjki...X89T
+2026-01-11T12:48:46.130430340Z [inf]  [AUTH] Verify failed: No nonce in session for wallet C1YtPjki...X89T. Session keys: ['_permanent']
+2026-01-11T12:50:06.212969369Z [inf]  [AUTH] Generated nonce for wallet AhMGQzTJ...Lk2D
+2026-01-11T12:50:06.212975069Z [inf]  [AUTH] Verify failed: No nonce in session for wallet AhMGQzTJ...Lk2D. Session keys: ['_permanent']
+2026-01-11T12:50:06.212979157Z [inf]  [AUTH] Generated nonce for wallet AhMGQzTJ...Lk2D
+2026-01-11T12:50:07.070980237Z [inf]  [AUTH] Verify failed: No nonce in session for wallet AhMGQzTJ...Lk2D. Session keys: ['_permanent']
+2026-01-11T12:50:36.739849836Z [inf]  👋 User left user-2c9iJuvN2cthzkAPc79DVN4zJy3w6rfikTcytRQiaucu
+2026-01-11T12:50:36.739862505Z [inf]  ? User joined user-2c9iJuvN2cthzkAPc79DVN4zJy3w6rfikTcytRQiaucu
+2026-01-11T12:52:36.909291965Z [inf]  [RESOLUTION] Got prices for 10 cryptos. Resolving all rounds in parallel...
+2026-01-11T12:52:36.909306039Z [inf]    [RESOLVE] BTC Round #2181: 90841.59 -> 90961.81 = UP
+2026-01-11T12:52:36.909456557Z [inf]  [ROUNDS] Round ended! Fetching end prices...
+2026-01-11T12:52:36.909471975Z [inf]  [PRICES] Fetching prices...
+2026-01-11T12:52:36.909478895Z [inf]  [BINANCE] Got 10 prices in 0.10s
+2026-01-11T12:52:37.319348504Z [inf]    [RESOLVE] ETH Round #2182: 3108.85 -> 3114.52 = UP
+2026-01-11T12:52:39.016029055Z [inf]    [RESOLVE] SOL Round #2183: 136.76 -> 136.92 = UP
+2026-01-11T12:52:40.187116588Z [inf]    [RESOLVE] BNB Round #2184: 912.66 -> 913.94 = UP
+2026-01-11T12:52:41.941191085Z [inf]    [RESOLVE] MATIC Round #2185: 0.3794 -> 0.3794 = SAME
+2026-01-11T12:52:43.023755893Z [inf]    [RESOLVE] XRP Round #2186: 2.1011 -> 2.1052 = UP
+2026-01-11T12:52:44.133987211Z [inf]    [RESOLVE] ADA Round #2187: 0.3921 -> 0.3943 = UP
+2026-01-11T12:52:45.353172070Z [inf]    [RESOLVE] DOGE Round #2188: 0.14002 -> 0.14077 = UP
+2026-01-11T12:52:47.038645108Z [inf]    [RESOLVE] DOT Round #2189: 2.114 -> 2.121 = UP
+2026-01-11T12:52:48.284554501Z [inf]    [BETS] Resolved 0 bets for round #2181
+2026-01-11T12:52:48.378642266Z [inf]    [RESOLVE] AVAX Round #2190: 13.83 -> 13.86 = UP
+2026-01-11T12:52:49.475445142Z [inf]    [BETS] Resolved 0 bets for round #2182
+2026-01-11T12:52:52.094231271Z [inf]    [BETS] Resolved 0 bets for round #2183
+2026-01-11T12:52:53.199294296Z [inf]    [BETS] Resolved 0 bets for round #2184
+2026-01-11T12:52:54.470478784Z [inf]    [BETS] Resolved 0 bets for round #2185
+2026-01-11T12:52:56.127121574Z [inf]    [BETS] Resolved 0 bets for round #2186
+2026-01-11T12:52:57.067434788Z [inf]    [BETS] Resolved 0 bets for round #2187
+2026-01-11T12:52:58.156857866Z [inf]    [BETS] Resolved 0 bets for round #2188
+2026-01-11T12:52:59.462137958Z [inf]    [BETS] Resolved 0 bets for round #2189
+2026-01-11T12:52:59.488731753Z [inf]    [BETS] Resolved 0 bets for round #2190
+2026-01-11T12:52:59.488739301Z [inf]  [SUCCESS] Resolved 10 rounds in parallel. Pausing exactly 15s before next round starts instantly...
+2026-01-11T12:53:19.487146652Z [inf]  [ROUNDS] Starting new round immediately after pause!
+2026-01-11T12:53:19.487156984Z [inf]  [PRICES] Fetching prices...
+2026-01-11T12:53:19.487164608Z [inf]  [BINANCE] Got 10 prices in 0.09s
+2026-01-11T12:53:21.720837825Z [inf]  [ROUNDS] Round started at 1768135994 and will end at 1768136894
+2026-01-11T12:53:57.491227600Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=49.36.90.242:15978 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T13:08:21.897711829Z [inf]  [ROUNDS] Round ended! Fetching end prices...
+2026-01-11T13:08:21.897717369Z [inf]  [PRICES] Fetching prices...
+2026-01-11T13:08:21.897722927Z [inf]  [BINANCE] Got 10 prices in 0.10s
+2026-01-11T13:08:21.897729197Z [inf]  [RESOLUTION] Got prices for 10 cryptos. Resolving all rounds in parallel...
+2026-01-11T13:08:22.871635235Z [inf]    [RESOLVE] BTC Round #2191: 90961.81 -> 90917.71 = DOWN
+2026-01-11T13:08:24.118902437Z [inf]    [RESOLVE] ETH Round #2192: 3114.93 -> 3112.53 = DOWN
+2026-01-11T13:08:25.870092996Z [inf]    [RESOLVE] SOL Round #2193: 136.94 -> 137.15 = UP
+2026-01-11T13:08:26.858619005Z [inf]    [RESOLVE] BNB Round #2194: 913.95 -> 913.34 = DOWN
+2026-01-11T13:08:27.852070598Z [inf]    [RESOLVE] MATIC Round #2195: 0.3794 -> 0.3794 = SAME
+2026-01-11T13:08:29.042106401Z [inf]    [RESOLVE] XRP Round #2196: 2.1056 -> 2.1032 = DOWN
+2026-01-11T13:08:30.255044533Z [inf]    [RESOLVE] ADA Round #2197: 0.3944 -> 0.395 = UP
+2026-01-11T13:08:31.955306156Z [inf]    [RESOLVE] DOGE Round #2198: 0.14088 -> 0.14072 = DOWN
+2026-01-11T13:08:33.112470466Z [inf]    [RESOLVE] DOT Round #2199: 2.121 -> 2.12 = DOWN
+2026-01-11T13:08:34.709563999Z [inf]    [RESOLVE] AVAX Round #2200: 13.86 -> 13.85 = DOWN
+2026-01-11T13:08:35.838231741Z [inf]    [BETS] Resolved 0 bets for round #2191
+2026-01-11T13:08:37.400327454Z [inf]    [BETS] Resolved 0 bets for round #2192
+2026-01-11T13:08:38.894411815Z [inf]    [BETS] Resolved 0 bets for round #2193
+2026-01-11T13:08:39.905051673Z [inf]    [BETS] Resolved 0 bets for round #2194
+2026-01-11T13:08:41.126628089Z [inf]    [BETS] Resolved 0 bets for round #2195
+2026-01-11T13:08:42.971577487Z [inf]    [BETS] Resolved 0 bets for round #2196
+2026-01-11T13:08:44.169801297Z [inf]    [BETS] Resolved 0 bets for round #2197
+2026-01-11T13:08:46.019849914Z [inf]    [BETS] Resolved 0 bets for round #2198
+2026-01-11T13:08:47.067020771Z [inf]    [BETS] Resolved 0 bets for round #2199
+2026-01-11T13:08:48.240302011Z [inf]    [BETS] Resolved 0 bets for round #2200
+2026-01-11T13:08:48.240310818Z [inf]  [SUCCESS] Resolved 10 rounds in parallel. Pausing exactly 15s before next round starts instantly...
+2026-01-11T13:09:08.346205857Z [inf]  [ROUNDS] Starting new round immediately after pause!
+2026-01-11T13:09:08.346212694Z [inf]  [PRICES] Fetching prices...
+2026-01-11T13:09:08.346221753Z [inf]  [BINANCE] Got 10 prices in 0.16s
+2026-01-11T13:09:11.797677763Z [inf]  [ROUNDS] Round started at 1768136943 and will end at 1768137843
+2026-01-11T13:10:32.490742793Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=51.79.160.9:43348 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T13:13:23.098880896Z [inf]  👋 User left user-2c9iJuvN2cthzkAPc79DVN4zJy3w6rfikTcytRQiaucu
+2026-01-11T13:13:23.098888726Z [inf]  ? User joined user-2c9iJuvN2cthzkAPc79DVN4zJy3w6rfikTcytRQiaucu
+2026-01-11T13:14:43.491396404Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=49.36.90.242:27436 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T13:16:23.490618093Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=23.81.34.242:45950 socket shutdown error: [Errno 9] Bad file descriptor
