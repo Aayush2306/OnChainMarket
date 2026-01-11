@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { SiTelegram, SiGitbook } from "react-icons/si";
 import { FaXTwitter } from "react-icons/fa6";
-import logoUrl from "../../assets/main-logo.png";
+import logoUrl from "../../../assets/main-logo.png";
 
 export function Footer() {
   return (
