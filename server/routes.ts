@@ -1,6 +1,5 @@
 import type { Express, Request, Response } from "express";
 import type { Server } from "http";
-import { setupAuth, registerAuthRoutes, isAuthenticated } from "./replit_integrations/auth";
 
 const RAILWAY_API_URL = "https://price-production-c1cb.up.railway.app";
 
@@ -8,19 +7,8 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Set up Replit Auth BEFORE other routes
-  await setupAuth(app);
-  registerAuthRoutes(app);
-
-  // Forward all /api requests to Railway backend (except auth routes which are handled above)
+  // Forward all /api requests to Railway backend
   app.all("/api/*", async (req: Request, res: Response) => {
-    // Skip if it's an auth route (already handled by Replit Auth)
-    if (req.path.startsWith("/api/login") || 
-        req.path.startsWith("/api/logout") || 
-        req.path.startsWith("/api/callback") ||
-        req.path.startsWith("/api/auth")) {
-      return;
-    }
     try {
       const targetPath = req.originalUrl;
       const targetUrl = `${RAILWAY_API_URL}${targetPath}`;

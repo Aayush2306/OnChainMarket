@@ -1,24 +1,6 @@
 // Railway backend URL - always use external API
 const API_BASE_URL = import.meta.env.VITE_API_URL || "https://price-production-c1cb.up.railway.app";
 
-// Token storage key
-const TOKEN_KEY = "ocm_auth_token";
-
-// Get stored JWT token
-export function getAuthToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY);
-}
-
-// Store JWT token
-export function setAuthToken(token: string): void {
-  localStorage.setItem(TOKEN_KEY, token);
-}
-
-// Clear JWT token
-export function clearAuthToken(): void {
-  localStorage.removeItem(TOKEN_KEY);
-}
-
 export async function apiRequest<T = unknown>(
   method: string,
   endpoint: string,
@@ -26,23 +8,11 @@ export async function apiRequest<T = unknown>(
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
   
-  // Build headers with JWT token if available
-  const headers: Record<string, string> = {};
-  if (data) {
-    headers["Content-Type"] = "application/json";
-  }
-  
-  // Add JWT token to Authorization header (works on Safari/iPhone)
-  const token = getAuthToken();
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-  
   const res = await fetch(url, {
     method,
-    headers,
+    headers: data ? { "Content-Type": "application/json" } : {},
     body: data ? JSON.stringify(data) : undefined,
-    credentials: "include", // Keep for browsers that support cookies
+    credentials: "include",
   });
 
   if (!res.ok) {

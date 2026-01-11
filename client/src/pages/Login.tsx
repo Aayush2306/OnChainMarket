@@ -1,24 +1,53 @@
-import { useEffect } from "react";
-import { Redirect } from "wouter";
+import { useState, useEffect } from "react";
+import { useLocation, Redirect } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import { User, Loader2 } from "lucide-react";
+import { usePhantom } from "@/hooks/usePhantom";
+import { OnboardingModal } from "@/components/OnboardingModal";
+import { Wallet, Loader2, AlertCircle, ExternalLink } from "lucide-react";
 
 export default function Login() {
-  const { isAuthenticated, isLoading, login } = useAuth();
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+  const { isAuthenticated, login, setNeedsOnboarding, needsOnboarding, setWalletAddress, walletAddress } = useAuth();
+  const { isPhantomInstalled, isConnecting, error, connectAndSign, signMessage } = usePhantom();
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
+
+  const handleConnect = async () => {
+    setLoginError(null);
+    const result = await connectAndSign();
+    
+    if (!result) return;
+
+    setWalletAddress(result.walletAddress);
+
+    try {
+      await login(result.walletAddress, result.signature);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Login failed";
+      
+      if (message.includes("Name and username required")) {
+        setNeedsOnboarding(true);
+      } else {
+        setLoginError(message);
+      }
+    }
+  };
+
+  const handleOnboardingComplete = async (name: string, username: string) => {
+    if (!walletAddress) return;
+
+    // Get a fresh signature with the new nonce for registration
+    const signature = await signMessage(walletAddress);
+    if (!signature) {
+      throw new Error("Failed to sign message");
+    }
+
+    await login(walletAddress, signature, name, username);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -28,42 +57,90 @@ export default function Login() {
       <Card className="relative w-full max-w-md animate-slide-up">
         <CardHeader className="text-center pb-2">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-chart-2 shadow-lg">
-            <User className="h-8 w-8 text-white" />
+            <Wallet className="h-8 w-8 text-white" />
           </div>
-          <CardTitle className="text-2xl font-display">Welcome</CardTitle>
+          <CardTitle className="text-2xl font-display">Connect Wallet</CardTitle>
           <CardDescription>
-            Sign in to start predicting and winning
+            Sign in with your Phantom wallet to start predicting
           </CardDescription>
         </CardHeader>
         
         <CardContent className="space-y-4">
-          <Button
-            className="w-full h-12 gap-2 text-base"
-            onClick={login}
-            data-testid="button-sign-in"
-          >
-            <User className="h-5 w-5" />
-            Sign In with Google
-          </Button>
+          {!isPhantomInstalled ? (
+            <div className="space-y-4">
+              <div className="rounded-lg bg-warning/10 border border-warning/20 p-4">
+                <div className="flex gap-3">
+                  <AlertCircle className="h-5 w-5 text-warning shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-sm">Phantom Wallet Required</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Install Phantom wallet to connect and start betting
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <Button
+                className="w-full gap-2"
+                onClick={() => window.open("https://phantom.app/", "_blank")}
+                data-testid="button-install-phantom"
+              >
+                <ExternalLink className="h-4 w-4" />
+                Install Phantom
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Button
+                className="w-full h-12 gap-2 text-base"
+                onClick={handleConnect}
+                disabled={isConnecting}
+                data-testid="button-connect-wallet"
+              >
+                {isConnecting ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Connecting...
+                  </>
+                ) : (
+                  <>
+                    <Wallet className="h-5 w-5" />
+                    Connect Phantom Wallet
+                  </>
+                )}
+              </Button>
+
+              {(error || loginError) && (
+                <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-3 text-sm text-destructive">
+                  {error || loginError}
+                </div>
+              )}
+            </>
+          )}
 
           <div className="pt-4 border-t border-border">
             <div className="space-y-2 text-sm text-muted-foreground">
               <p className="flex items-center gap-2">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs text-primary font-medium">1</span>
-                Sign in with your Google account
+                Connect your Phantom wallet
               </p>
               <p className="flex items-center gap-2">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs text-primary font-medium">2</span>
-                Get 1,000 free credits to start
+                Sign a message to verify ownership
               </p>
               <p className="flex items-center gap-2">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs text-primary font-medium">3</span>
-                Start predicting and winning
+                Get 1,000 free credits to start
               </p>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      <OnboardingModal
+        open={needsOnboarding}
+        onComplete={handleOnboardingComplete}
+      />
     </div>
   );
 }
