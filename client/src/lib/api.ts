@@ -1,5 +1,5 @@
 // Use Railway backend URL in production, relative URLs in development
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+const API_BASE_URL = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.hostname !== 'localhost' ? "https://price-production-c1cb.up.railway.app" : "");
 
 export async function apiRequest<T = unknown>(
   method: string,
