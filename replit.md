@@ -90,7 +90,18 @@ Preferred communication style: Simple, everyday language.
 - WebSocket integration via Socket.IO for live updates
 - Toast notifications for bet wins/losses with result details
 - Intelligent polling fallback when WebSocket disconnects (5s for markets, 30s for notifications)
-- Socket events: round_update, round_resolved, new_bet, credits_update, bet_result
+- Socket events:
+  - `round_update`: Crypto round state changed
+  - `round_resolved`: Crypto round ended with result
+  - `new_bet`: Someone placed a bet on crypto round
+  - `credits_update`: User credits changed
+  - `bet_result`: User's bet resolved (win/loss notification)
+  - `custom_bet_update`: Someone placed a bet on custom round (pool totals updated)
+  - `custom_bet_resolved`: Custom bet round ended with result
+- Socket rooms:
+  - `{CRYPTO}-room`: Join for crypto market updates (e.g., `BTC-room`)
+  - `user-{id}`: Join for personal notifications
+  - `custom-bet-{round_id}`: Join for custom bet round updates
 
 ### CSS Utilities Added
 - `.glass` / `.glass-dark`: Glassmorphism effects
