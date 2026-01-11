@@ -1,0 +1,410 @@
+2026-01-11T09:53:06.635871476Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:55828 socket shutdown error: [Errno 9] Bad file descriptorserver=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:19916 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T09:54:36.636298845Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:38888 socket shutdown error: [Errno 9] Bad file descriptorserver=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:61636 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T10:02:29.636469081Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:51274 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T10:03:49.690497452Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:03:49.690513597Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.690523591Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:03:49.690532262Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:03:49.690555804Z [err]  [2026-01-11 10:03:42,414] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:03:49.690564788Z [err]  Traceback (most recent call last):
+2026-01-11T10:03:49.690573707Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:03:49.690582372Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:03:49.690590631Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.690603722Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:03:49.690612093Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:03:49.690621358Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.690630190Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:03:49.690640630Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:03:49.690641787Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.690649505Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:03:49.690656186Z [err]      rv = self.dispatch_request()
+2026-01-11T10:03:49.690662370Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.690669634Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:03:49.697750953Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.697760672Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:03:49.697772933Z [err]      return next(self.gen)
+2026-01-11T10:03:49.697781179Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.697801074Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:03:49.697809448Z [err]      conn = pool.getconn()
+2026-01-11T10:03:49.697817270Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.697825369Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:03:49.697833873Z [err]      return self._getconn(key)
+2026-01-11T10:03:49.697842502Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.697849758Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:03:49.697858153Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:03:49.697868862Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:03:49.697877577Z [err]  [2026-01-11 10:03:42,418] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:03:49.697884774Z [err]  Traceback (most recent call last):
+2026-01-11T10:03:49.697892428Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:03:49.697899028Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:03:49.697906591Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.697915161Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:03:49.697923243Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:03:49.697938446Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.697953784Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:03:49.699398387Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:03:49.699415503Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.699425289Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:03:49.699432014Z [err]      rv = self.dispatch_request()
+2026-01-11T10:03:49.699450924Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.699459020Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:03:49.699465586Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:03:49.699471594Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.699478261Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:03:49.699484012Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:03:49.699490548Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.699496437Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:03:49.699503611Z [err]      return next(self.gen)
+2026-01-11T10:03:49.699509532Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.699515544Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:03:49.699521670Z [err]      conn = pool.getconn()
+2026-01-11T10:03:49.699528651Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.699536635Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:03:49.699555003Z [err]      return self._getconn(key)
+2026-01-11T10:03:49.699562870Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.699570827Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:03:49.701852800Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:03:49.701863292Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.701866639Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:03:49.701873548Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:03:49.701878791Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:03:49.701880866Z [err]      rv = self.dispatch_request()
+2026-01-11T10:03:49.701886419Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.701888074Z [err]  [2026-01-11 10:03:42,420] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:03:49.701894251Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:03:49.701896385Z [err]  Traceback (most recent call last):
+2026-01-11T10:03:49.701902328Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:03:49.701905186Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:03:49.701909980Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.701913649Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:03:49.701920336Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.701925970Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:03:49.701935405Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:03:49.701940799Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.701946707Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:03:49.704595044Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.704608996Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:03:49.704617051Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:03:49.704617726Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:03:49.704627480Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:03:49.704635718Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.704641918Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:03:49.704648505Z [err]      return next(self.gen)
+2026-01-11T10:03:49.704655260Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.704689201Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:03:49.704695967Z [err]      conn = pool.getconn()
+2026-01-11T10:03:49.704701282Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.704706398Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:03:49.704723676Z [err]      return self._getconn(key)
+2026-01-11T10:03:49.704728731Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.704735790Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:03:49.704740958Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:03:49.704745000Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:03:49.704749493Z [err]  [2026-01-11 10:03:42,422] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:03:49.704756590Z [err]  Traceback (most recent call last):
+2026-01-11T10:03:49.704775064Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:03:49.704784757Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:03:49.708432584Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.708456381Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:03:49.708466725Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:03:49.708484876Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.708494869Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:03:49.708504121Z [err]      rv = self.dispatch_request()
+2026-01-11T10:03:49.708511801Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.708521104Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:03:49.708531055Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:03:49.708539569Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.708549843Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:03:49.708558191Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:03:49.708567473Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.708575184Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:03:49.708582233Z [err]      return next(self.gen)
+2026-01-11T10:03:49.708589873Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.708598984Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:03:49.708607698Z [err]      conn = pool.getconn()
+2026-01-11T10:03:49.708615503Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.708623819Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:03:49.708635208Z [err]      return self._getconn(key)
+2026-01-11T10:03:49.711100931Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.711111146Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:03:49.711126033Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:03:49.711133295Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:03:49.711140851Z [err]  [2026-01-11 10:03:42,423] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:03:49.711153957Z [err]  Traceback (most recent call last):
+2026-01-11T10:03:49.711163337Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:03:49.711171432Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:03:49.711179207Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.711187806Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:03:49.711194927Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:03:49.711201869Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.711207710Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:03:49.711213972Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:03:49.711220280Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.711226536Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:03:49.711232464Z [err]      rv = self.dispatch_request()
+2026-01-11T10:03:49.711237559Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.711244458Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:03:49.711250029Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:03:49.714374824Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.714382950Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:03:49.714389013Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:03:49.714394261Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.714398532Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:03:49.714403102Z [err]      return next(self.gen)
+2026-01-11T10:03:49.714407715Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.714414187Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:03:49.714419837Z [err]      conn = pool.getconn()
+2026-01-11T10:03:49.714424795Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.714429466Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:03:49.714433945Z [err]      return self._getconn(key)
+2026-01-11T10:03:49.714439246Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.714445755Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:03:49.714449734Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:03:49.714453988Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:03:49.714458861Z [err]  [2026-01-11 10:03:42,425] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:03:49.714463960Z [err]  Traceback (most recent call last):
+2026-01-11T10:03:49.714470048Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:03:49.714474873Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:03:49.714478880Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.714482883Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:03:49.718822302Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:03:49.718837136Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.718845870Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:03:49.718852936Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:03:49.718860271Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.718867980Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:03:49.718874658Z [err]      rv = self.dispatch_request()
+2026-01-11T10:03:49.718881713Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.718888369Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:03:49.718897336Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:03:49.718904177Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.718918180Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:03:49.718925515Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:03:49.718932670Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.718939290Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:03:49.718946015Z [err]      return next(self.gen)
+2026-01-11T10:03:49.718953356Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.718961273Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:03:49.718972872Z [err]      conn = pool.getconn()
+2026-01-11T10:03:49.718979787Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.718986980Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:03:49.735002206Z [err]      return self._getconn(key)
+2026-01-11T10:03:49.735009156Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.735017535Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:03:49.735023435Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:03:49.735029529Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:03:49.735036908Z [err]  [2026-01-11 10:03:42,426] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:03:49.735042522Z [err]  Traceback (most recent call last):
+2026-01-11T10:03:49.735048184Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:03:49.735054462Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:03:49.735060486Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.735066435Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:03:49.735071865Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:03:49.735077236Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.735083183Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:03:49.735088898Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:03:49.735094340Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.735100479Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:03:49.735106177Z [err]      rv = self.dispatch_request()
+2026-01-11T10:03:49.735113076Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.735118988Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:03:49.741352284Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:03:49.741361976Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.741368338Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:03:49.741374171Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:03:49.741380549Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.741387360Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:03:49.741394149Z [err]      return next(self.gen)
+2026-01-11T10:03:49.741401846Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.741409236Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:03:49.741415470Z [err]      conn = pool.getconn()
+2026-01-11T10:03:49.741419937Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:03:49.741425377Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:03:49.741431984Z [err]      return self._getconn(key)
+2026-01-11T10:03:49.741436965Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:03:49.741442923Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:03:49.741448013Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:03:49.741453164Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:04:17.889386765Z [err]      rv = self.dispatch_request()
+2026-01-11T10:04:17.889403598Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.889415958Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:04:17.889417238Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:04:17.889428192Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:04:17.889432593Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:04:17.889442158Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.889550118Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:23822 socket shutdown error: [Errno 9] Bad file descriptor[2026-01-11 10:04:17,262] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:04:17.889557338Z [err]  Traceback (most recent call last):
+2026-01-11T10:04:17.889564503Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:04:17.889570741Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:04:17.889579534Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.889599313Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:04:17.889613472Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:04:17.889621577Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.889632667Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:04:17.889639542Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:04:17.889649893Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.889658835Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:04:17.895173386Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895196738Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:04:17.895209888Z [err]      return next(self.gen)
+2026-01-11T10:04:17.895237057Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895254328Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:04:17.895264239Z [err]      conn = pool.getconn()
+2026-01-11T10:04:17.895273396Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895280487Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:04:17.895288475Z [err]      return self._getconn(key)
+2026-01-11T10:04:17.895297062Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895304904Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:04:17.895311711Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:04:17.895318676Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:04:17.895326317Z [err]  [2026-01-11 10:04:17,265] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:04:17.895333693Z [err]  Traceback (most recent call last):
+2026-01-11T10:04:17.895340541Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:04:17.895348160Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:04:17.895355672Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895365537Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:04:17.895373336Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:04:17.895382325Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895389556Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:04:17.895396852Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:04:17.895405109Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895416125Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:04:17.895426714Z [err]      rv = self.dispatch_request()
+2026-01-11T10:04:17.895441585Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895450676Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:04:17.895485413Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:04:17.895509719Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895525759Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:04:17.895547154Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:04:17.895590555Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895610158Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:04:17.895650048Z [err]      return next(self.gen)
+2026-01-11T10:04:17.895677055Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895687605Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:04:17.895707769Z [err]      conn = pool.getconn()
+2026-01-11T10:04:17.895759189Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895801549Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:04:17.895820456Z [err]      return self._getconn(key)
+2026-01-11T10:04:17.895859290Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.895869219Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:04:17.898208752Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:04:17.898224206Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:04:17.898233304Z [err]  Exception in thread Thread-1 (run_rounds_forever):
+2026-01-11T10:04:17.898241497Z [err]  Traceback (most recent call last):
+2026-01-11T10:04:17.898249938Z [err]    File "/root/.nix-profile/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+2026-01-11T10:04:17.898259406Z [err]      self.run()
+2026-01-11T10:04:17.898273530Z [err]    File "/root/.nix-profile/lib/python3.12/threading.py", line 1012, in run
+2026-01-11T10:04:17.898283806Z [err]      self._target(*self._args, **self._kwargs)
+2026-01-11T10:04:17.898293783Z [err]    File "/app/main.py", line 1706, in run_rounds_forever
+2026-01-11T10:04:17.898303814Z [err]      with get_db_cursor() as (cursor, conn):
+2026-01-11T10:04:17.898318752Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898330728Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:04:17.898340818Z [err]      return next(self.gen)
+2026-01-11T10:04:17.898354662Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898364811Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:04:17.898379886Z [err]      conn = pool.getconn()
+2026-01-11T10:04:17.898391640Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898402451Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:04:17.898411694Z [err]      return self._getconn(key)
+2026-01-11T10:04:17.898428268Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898443600Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:04:17.898451517Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:04:17.898461493Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:04:17.898478204Z [err]  [2026-01-11 10:04:17,270] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:04:17.898486853Z [err]  Traceback (most recent call last):
+2026-01-11T10:04:17.898494472Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:04:17.898503098Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:04:17.898513885Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898523210Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:04:17.898534296Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:04:17.898542644Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898556240Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:04:17.898569064Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:04:17.898583992Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898593163Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:04:17.898602738Z [err]      rv = self.dispatch_request()
+2026-01-11T10:04:17.898610162Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898627332Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:04:17.898634412Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:04:17.898647394Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.898655292Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:04:17.898662142Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:04:17.901329495Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.901336164Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:04:17.901343500Z [err]      return next(self.gen)
+2026-01-11T10:04:17.901350124Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:17.901357352Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:04:17.901364743Z [err]      conn = pool.getconn()
+2026-01-11T10:04:17.901371092Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:17.901379176Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:04:17.901385692Z [err]      return self._getconn(key)
+2026-01-11T10:04:17.901391589Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:17.901397770Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:04:17.901403658Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:04:17.901410765Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:04:19.898878956Z [err]  [2026-01-11 10:04:19,855] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:04:19.898887165Z [err]  Traceback (most recent call last):
+2026-01-11T10:04:19.898896913Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:04:19.898915891Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:04:19.898930097Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:19.898941703Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:04:19.898950727Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:04:19.898963776Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:19.898978254Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:04:19.898989205Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:04:19.899002401Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:19.899012708Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:04:19.899025903Z [err]      rv = self.dispatch_request()
+2026-01-11T10:04:19.899040745Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:19.899051777Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:04:19.899072743Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:04:19.899088395Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:19.899101243Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:04:19.899116979Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:04:19.904429797Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:04:19.904437873Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:04:19.904446207Z [err]      return next(self.gen)
+2026-01-11T10:04:19.904460227Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:19.904468800Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:04:19.904475462Z [err]      conn = pool.getconn()
+2026-01-11T10:04:19.904482562Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:19.904490472Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:04:19.904499187Z [err]      return self._getconn(key)
+2026-01-11T10:04:19.904506091Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:19.904514214Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:04:19.904523118Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:04:19.904530516Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:04:22.896408756Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T10:04:22.896422302Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T10:04:22.896429521Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:22.896435798Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T10:04:22.896441255Z [err]      rv = self.dispatch_request()
+2026-01-11T10:04:22.896447209Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:22.896453530Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T10:04:22.896460522Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T10:04:22.896466740Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:22.896473760Z [err]    File "/app/main.py", line 708, in get_current_round
+2026-01-11T10:04:22.896480220Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T10:04:22.896720405Z [err]  [2026-01-11 10:04:22,337] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T10:04:22.896731595Z [err]  Traceback (most recent call last):
+2026-01-11T10:04:22.896737737Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T10:04:22.896744325Z [err]      response = self.full_dispatch_request()
+2026-01-11T10:04:22.896750922Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:22.896758344Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T10:04:22.896765400Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T10:04:22.896776980Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:22.900121246Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T10:04:22.900129175Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T10:04:22.900134949Z [err]      return next(self.gen)
+2026-01-11T10:04:22.900141413Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:22.900148014Z [err]    File "/app/main.py", line 158, in get_db_cursor
+2026-01-11T10:04:22.900155486Z [err]      conn = pool.getconn()
+2026-01-11T10:04:22.900163339Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T10:04:22.900168896Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T10:04:22.900174549Z [err]      return self._getconn(key)
+2026-01-11T10:04:22.900182463Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T10:04:22.900188141Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T10:04:22.900193736Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T10:04:22.900198675Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T10:05:33.636323336Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:28330 socket shutdown error: [Errno 9] Bad file descriptorserver=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:46848 socket shutdown error: [Errno 9] Bad file descriptorserver=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:16398 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T10:06:33.637212055Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.97:36804 socket shutdown error: [Errno 9] Bad file descriptor
