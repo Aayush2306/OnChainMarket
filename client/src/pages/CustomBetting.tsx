@@ -34,7 +34,8 @@ import {
   Plus,
   Sparkles,
   Users,
-  ArrowRight
+  ArrowRight,
+  Search
 } from "lucide-react";
 
 function CreateBetForm() {
@@ -234,22 +235,44 @@ function CustomBetCard({ bet }: CustomBetCardProps) {
 }
 
 function ActiveBets() {
+  const [searchQuery, setSearchQuery] = useState("");
+  
   const { data: bets = [], isLoading } = useQuery<CustomBetRound[]>({
     queryKey: ["/api/custom-bet/active"],
     queryFn: () => api.getActiveCustomBets() as Promise<CustomBetRound[]>,
     refetchInterval: 10000,
   });
 
+  const filteredBets = bets.filter((bet) => {
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      (bet.token_name?.toLowerCase().includes(query)) ||
+      (bet.token_symbol?.toLowerCase().includes(query)) ||
+      (bet.token_ca?.toLowerCase().includes(query))
+    );
+  });
+
   if (isLoading) {
     return (
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {[...Array(3)].map((_, i) => (
-          <Card key={i} className="animate-pulse">
-            <CardContent className="p-6">
-              <div className="h-32 bg-muted rounded" />
-            </CardContent>
-          </Card>
-        ))}
+      <div className="space-y-4">
+        <div className="relative max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by name or CA..."
+            className="pl-9"
+            disabled
+          />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[...Array(3)].map((_, i) => (
+            <Card key={i} className="animate-pulse">
+              <CardContent className="p-6">
+                <div className="h-32 bg-muted rounded" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     );
   }
@@ -269,10 +292,34 @@ function ActiveBets() {
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {bets.map((bet) => (
-        <CustomBetCard key={bet.id} bet={bet} />
-      ))}
+    <div className="space-y-4">
+      <div className="relative max-w-sm">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder="Search by name or CA..."
+          className="pl-9"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          data-testid="input-search-bets"
+        />
+      </div>
+      
+      {filteredBets.length === 0 ? (
+        <Card>
+          <CardContent className="py-8 text-center">
+            <Search className="h-10 w-10 mx-auto mb-3 text-muted-foreground/50" />
+            <p className="text-muted-foreground">
+              No bets found matching "{searchQuery}"
+            </p>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredBets.map((bet) => (
+            <CustomBetCard key={bet.id} bet={bet} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
