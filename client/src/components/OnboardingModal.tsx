@@ -62,7 +62,7 @@ export function OnboardingModal({ open, onComplete }: OnboardingModalProps) {
             <Sparkles className="h-8 w-8 text-primary" />
           </div>
           <DialogTitle className="text-center text-2xl font-display">
-            Welcome to PredictGram
+            Welcome to On-Chain Market
           </DialogTitle>
           <DialogDescription className="text-center">
             Complete your profile to start predicting and winning

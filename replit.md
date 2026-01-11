@@ -1,8 +1,8 @@
-# PredictGram - Prediction Betting Platform
+# On-Chain Market - Prediction Betting Platform
 
 ## Overview
 
-PredictGram is a prediction betting platform that allows users to bet on crypto prices, stocks, on-chain metrics, and create custom prediction markets. Users connect via Phantom wallet for authentication and place bets using an in-app credits system.
+On-Chain Market is a prediction betting platform that allows users to bet on crypto prices, stocks, on-chain metrics, and create custom prediction markets. Users connect via Phantom wallet for authentication and place bets using an in-app credits system.
 
 The application uses a full-stack TypeScript architecture with React frontend, Express backend, and PostgreSQL database. The backend API is hosted externally on Railway, with the frontend designed to communicate with it.
 
