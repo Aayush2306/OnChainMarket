@@ -20,16 +20,20 @@ import {
   Bell
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { usePhantom } from "@/hooks/usePhantom";
 import { useState } from "react";
 import mainLogo from "@/assets/main-logo.png";
 import profileImg from "@/assets/profile.png";
 
 export function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
+  const { disconnect: disconnectPhantom } = usePhantom();
   const [, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
+    // Disconnect from Phantom so user can connect a different wallet
+    await disconnectPhantom();
     await logout();
     setLocation("/");
   };
