@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
+import { useSocket } from "@/context/SocketContext";
 import { api } from "@/lib/api";
 import { queryClient } from "@/lib/queryClient";
 import { type CustomBetRound } from "@shared/schema";
@@ -28,9 +29,18 @@ export default function CustomBetDetail() {
   
   const { toast } = useToast();
   const { user, refreshUser } = useAuth();
+  const { isConnected, joinCustomBetRoom, leaveCustomBetRoom } = useSocket();
   const [amount, setAmount] = useState("");
   const [selectedPrediction, setSelectedPrediction] = useState<"higher" | "lower" | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
+
+  // Join socket room for real-time updates
+  useEffect(() => {
+    if (roundId && isConnected) {
+      joinCustomBetRoom(roundId);
+      return () => leaveCustomBetRoom(roundId);
+    }
+  }, [roundId, isConnected, joinCustomBetRoom, leaveCustomBetRoom]);
 
   const { data: bet, isLoading } = useQuery<CustomBetRound | null>({
     queryKey: ["/api/custom-bet", roundId],
@@ -43,7 +53,8 @@ export default function CustomBetDetail() {
       }
     },
     enabled: !!roundId,
-    refetchInterval: 5000,
+    // Use longer polling interval when socket is connected (socket handles real-time updates)
+    refetchInterval: isConnected ? 30000 : 5000,
   });
 
   const placeBetMutation = useMutation({

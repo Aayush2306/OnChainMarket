@@ -13,6 +13,8 @@ interface SocketContextType {
   leaveRoom: (room: string) => void;
   joinUserRoom: () => void;
   leaveUserRoom: () => void;
+  joinCustomBetRoom: (roundId: number) => void;
+  leaveCustomBetRoom: (roundId: number) => void;
 }
 
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
@@ -78,6 +80,36 @@ export function SocketProvider({ children }: { children: ReactNode }) {
       refreshUser();
     });
 
+    // Custom bet socket events
+    newSocket.on("custom_bet_update", (data: { 
+      round_id: number; 
+      total_pool: number;
+      higher_pool: number;
+      lower_pool: number;
+      bet_count: number;
+    }) => {
+      // Invalidate both the individual bet detail and the active list
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-bet", data.round_id] });
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-bet/active"] });
+    });
+
+    newSocket.on("custom_bet_resolved", (data: { 
+      round_id: number;
+      token_symbol: string;
+      result: string;
+      total_pool: number;
+    }) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-bet", data.round_id] });
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-bet/active"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/notifications"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/my-stats"] });
+      
+      toast({
+        title: `${data.token_symbol} Round Ended`,
+        description: `Result: ${data.result.toUpperCase()} - Pool: ${data.total_pool} credits`,
+      });
+    });
+
     setSocket(newSocket);
 
     return () => {
@@ -118,6 +150,18 @@ export function SocketProvider({ children }: { children: ReactNode }) {
     }
   }, [socket, isConnected, user]);
 
+  const joinCustomBetRoom = useCallback((roundId: number) => {
+    if (socket && isConnected) {
+      socket.emit("join_custom_bet", { round_id: roundId });
+    }
+  }, [socket, isConnected]);
+
+  const leaveCustomBetRoom = useCallback((roundId: number) => {
+    if (socket && isConnected) {
+      socket.emit("leave_custom_bet", { round_id: roundId });
+    }
+  }, [socket, isConnected]);
+
   return (
     <SocketContext.Provider
       value={{
@@ -127,6 +171,8 @@ export function SocketProvider({ children }: { children: ReactNode }) {
         leaveRoom,
         joinUserRoom,
         leaveUserRoom,
+        joinCustomBetRoom,
+        leaveCustomBetRoom,
       }}
     >
       {children}
