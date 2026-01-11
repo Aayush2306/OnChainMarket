@@ -1,5 +1,5 @@
-// Use relative URLs to proxy through our server, avoiding CORS issues
-const API_BASE_URL = "";
+// Use Railway backend URL in production, relative URLs in development
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 export async function apiRequest<T = unknown>(
   method: string,
