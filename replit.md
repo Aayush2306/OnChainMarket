@@ -58,7 +58,9 @@ Preferred communication style: Simple, everyday language.
 - **Redis**: Session caching (optional, based on backend configuration)
 
 ### Wallet Integration
-- **Phantom Wallet**: Solana wallet for authentication
+- **Multi-Wallet Support**: Solana Wallet Adapter with Phantom and Solflare wallets
+- **Wallet Adapter**: @solana/wallet-adapter-react, @solana/wallet-adapter-react-ui
+- **Mobile Support**: Standard wallet adapter protocol for mobile wallet apps
 - **nacl/PyNaCl**: Signature verification (ed25519)
 
 ### Key Environment Variables
