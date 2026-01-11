@@ -1,0 +1,293 @@
+2026-01-11T05:14:11.065450415Z [inf]  ✅ Database initialized
+2026-01-11T05:14:11.065460277Z [inf]  🔄 Starting background workers...
+2026-01-11T05:14:11.065477774Z [inf]  [PRICES] Fetching prices...
+2026-01-11T05:14:11.065489405Z [inf]    ✅ Crypto rounds worker started
+2026-01-11T05:14:11.065496185Z [inf]    ✅ Stock rounds worker started
+2026-01-11T05:14:11.065507405Z [inf]    ✅ OnChain rounds worker started
+2026-01-11T05:14:11.065513262Z [inf]    ✅ Custom bet resolver worker started
+2026-01-11T05:14:11.065519153Z [inf]  🎉 All workers running!
+2026-01-11T05:14:11.065524241Z [inf]  [BINANCE] Got 10 prices in 0.10s
+2026-01-11T05:14:11.065529850Z [inf]  [ROUNDS] Round started at 1768104660 and will end at 1768105560
+2026-01-11T05:14:11.065535402Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065540125Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065546639Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065551390Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065556604Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065560988Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065565727Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065571639Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065577359Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065584034Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.065589396Z [inf]  [ROUNDS] Round ended! Fetching end prices...
+2026-01-11T05:14:11.065594865Z [inf]  [PRICES] Fetching prices...
+2026-01-11T05:14:11.065613832Z [inf]  🚀 Starting PredictGram backend...
+2026-01-11T05:14:11.067333615Z [inf]  [BINANCE] Got 10 prices in 0.09s
+2026-01-11T05:14:11.067339792Z [inf]  [RESOLUTION] Got prices for 10 cryptos. Resolving all rounds in parallel...
+2026-01-11T05:14:11.067345858Z [inf]    [RESOLVE] BTC Round #1851: 90724.43 -> 90708.26 = DOWN
+2026-01-11T05:14:11.067351211Z [inf]    [RESOLVE] ETH Round #1852: 3097.56 -> 3095.43 = DOWN
+2026-01-11T05:14:11.067357014Z [inf]    [RESOLVE] SOL Round #1853: 136.3 -> 136.01 = DOWN
+2026-01-11T05:14:11.067362923Z [inf]    [RESOLVE] BNB Round #1854: 914.46 -> 911.88 = DOWN
+2026-01-11T05:14:11.067369130Z [inf]    [RESOLVE] MATIC Round #1855: 0.3794 -> 0.3794 = SAME
+2026-01-11T05:14:11.067372824Z [inf]    [RESOLVE] DOT Round #1859: 2.1 -> 2.096 = DOWN
+2026-01-11T05:14:11.067374945Z [inf]    [RESOLVE] XRP Round #1856: 2.0949 -> 2.0922 = DOWN
+2026-01-11T05:14:11.067380687Z [inf]    [RESOLVE] ADA Round #1857: 0.3906 -> 0.3898 = DOWN
+2026-01-11T05:14:11.067388539Z [inf]    [RESOLVE] DOGE Round #1858: 0.13915 -> 0.13886 = DOWN
+2026-01-11T05:14:11.067389604Z [inf]    [RESOLVE] AVAX Round #1860: 13.74 -> 13.73 = DOWN
+2026-01-11T05:14:11.067396915Z [inf]    [BETS] Resolved 1 bets for round #1851
+2026-01-11T05:14:11.067403029Z [inf]    [BETS] Resolved 0 bets for round #1852
+2026-01-11T05:14:11.067408819Z [inf]    [BETS] Resolved 0 bets for round #1853
+2026-01-11T05:14:11.067421621Z [inf]    [BETS] Resolved 0 bets for round #1854
+2026-01-11T05:14:11.067428456Z [inf]    [BETS] Resolved 0 bets for round #1855
+2026-01-11T05:14:11.067440031Z [inf]    [BETS] Resolved 0 bets for round #1856
+2026-01-11T05:14:11.067447263Z [inf]    [BETS] Resolved 0 bets for round #1857
+2026-01-11T05:14:11.067454164Z [inf]    [ERROR] Error resolving DOT: connection pool exhausted
+2026-01-11T05:14:11.067461046Z [inf]    [ERROR] Error resolving AVAX: connection pool exhausted
+2026-01-11T05:14:11.067471201Z [inf]    [BETS] Resolved 0 bets for round #1858
+2026-01-11T05:14:11.069860813Z [inf]  ?? User left user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.069869700Z [inf]  [SUCCESS] Resolved 8 rounds in parallel. Pausing exactly 15s before next round starts instantly...
+2026-01-11T05:14:11.069876549Z [inf]  [ROUNDS] Round ended! Fetching end prices...
+2026-01-11T05:14:11.069879788Z [inf]  [ROUNDS] Starting new round immediately after pause!
+2026-01-11T05:14:11.069887369Z [inf]  [PRICES] Fetching prices...
+2026-01-11T05:14:11.069887974Z [inf]  [PRICES] Fetching prices...
+2026-01-11T05:14:11.069895815Z [inf]  [BINANCE] Got 10 prices in 0.09s
+2026-01-11T05:14:11.069896732Z [inf]  [BINANCE] Got 10 prices in 0.09s
+2026-01-11T05:14:11.069903955Z [inf]  [ROUNDS] Round started at 1768105610 and will end at 1768106510
+2026-01-11T05:14:11.069905847Z [inf]  [RESOLUTION] Got prices for 10 cryptos. Resolving all rounds in parallel...
+2026-01-11T05:14:11.069913823Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.069915312Z [inf]    [RESOLVE] BTC Round #1861: 90708.27 -> 90758.09 = UP
+2026-01-11T05:14:11.069923805Z [inf]  ? User joined user-2Diof5sPRboGVHF9TjfGnsVgF1SVw7pFtmam7RwknKR9
+2026-01-11T05:14:11.069931191Z [inf]    [RESOLVE] ETH Round #1862: 3095.41 -> 3096.55 = UP
+2026-01-11T05:14:11.069933201Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.069940912Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.069944016Z [inf]    [RESOLVE] SOL Round #1863: 136.01 -> 136.24 = UP
+2026-01-11T05:14:11.069947859Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.069955504Z [inf]  ?? User left user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.069961113Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.069966492Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.073677679Z [inf]    [ERROR] Error resolving AVAX: connection pool exhausted
+2026-01-11T05:14:11.073680484Z [inf]  [BINANCE] Got 10 prices in 0.09s
+2026-01-11T05:14:11.073681097Z [inf]    [RESOLVE] BNB Round #1864: 911.88 -> 912.97 = UP
+2026-01-11T05:14:11.073693809Z [inf]  [ROUNDS] Round started at 1768106557 and will end at 1768107457
+2026-01-11T05:14:11.073696126Z [inf]    [BETS] Resolved 0 bets for round #1868
+2026-01-11T05:14:11.073696469Z [inf]    [RESOLVE] MATIC Round #1865: 0.3794 -> 0.3794 = SAME
+2026-01-11T05:14:11.073701994Z [inf]  [SUCCESS] Resolved 8 rounds in parallel. Pausing exactly 15s before next round starts instantly...
+2026-01-11T05:14:11.073707896Z [inf]    [RESOLVE] XRP Round #1866: 2.0913 -> 2.0922 = UP
+2026-01-11T05:14:11.073713805Z [inf]  [ROUNDS] Starting new round immediately after pause!
+2026-01-11T05:14:11.073721037Z [inf]    [RESOLVE] ADA Round #1867: 0.3896 -> 0.3912 = UP
+2026-01-11T05:14:11.073721649Z [inf]    [BETS] Resolved 0 bets for round #1863
+2026-01-11T05:14:11.073722224Z [inf]  [PRICES] Fetching prices...
+2026-01-11T05:14:11.073729591Z [inf]    [RESOLVE] DOGE Round #1868: 0.13883 -> 0.13907 = UP
+2026-01-11T05:14:11.073732957Z [inf]    [BETS] Resolved 0 bets for round #1864
+2026-01-11T05:14:11.073742810Z [inf]    [RESOLVE] DOT Round #1869: 2.096 -> 2.101 = UP
+2026-01-11T05:14:11.073749424Z [inf]    [BETS] Resolved 0 bets for round #1865
+2026-01-11T05:14:11.073752497Z [inf]    [RESOLVE] AVAX Round #1870: 13.72 -> 13.77 = UP
+2026-01-11T05:14:11.073758937Z [inf]    [BETS] Resolved 0 bets for round #1866
+2026-01-11T05:14:11.073763854Z [inf]    [BETS] Resolved 0 bets for round #1861
+2026-01-11T05:14:11.073765853Z [inf]    [BETS] Resolved 0 bets for round #1867
+2026-01-11T05:14:11.073772497Z [inf]    [ERROR] Error resolving DOT: connection pool exhausted
+2026-01-11T05:14:11.073775977Z [inf]    [BETS] Resolved 0 bets for round #1862
+2026-01-11T05:14:11.078261757Z [inf]  [CUSTOM BET] Round #9 (WhiteWhale): $0.1766 -> $0.1838 = HIGHER
+2026-01-11T05:14:11.078267110Z [inf]    [BETS] Resolved 0 bets for round #1875
+2026-01-11T05:14:11.078269567Z [inf]  [CUSTOM BET] No winners - Creator gets full pool: 50
+2026-01-11T05:14:11.078277795Z [inf]  [ROUNDS] Round ended! Fetching end prices...
+2026-01-11T05:14:11.078280968Z [inf]    [BETS] Resolved 0 bets for round #1876
+2026-01-11T05:14:11.078284615Z [inf]  [PRICES] Fetching prices...
+2026-01-11T05:14:11.078290698Z [inf]    [BETS] Resolved 0 bets for round #1877
+2026-01-11T05:14:11.078293320Z [inf]  [BINANCE] Got 10 prices in 0.09s
+2026-01-11T05:14:11.078299429Z [inf]  [RESOLUTION] Got prices for 10 cryptos. Resolving all rounds in parallel...
+2026-01-11T05:14:11.078305102Z [inf]    [RESOLVE] BTC Round #1871: 90758.07 -> 90763.06 = UP
+2026-01-11T05:14:11.078312144Z [inf]    [RESOLVE] ETH Round #1872: 3095.67 -> 3097.76 = UP
+2026-01-11T05:14:11.078318330Z [inf]    [RESOLVE] SOL Round #1873: 136.15 -> 136.2 = UP
+2026-01-11T05:14:11.078324712Z [inf]    [RESOLVE] BNB Round #1874: 912.45 -> 913.17 = UP
+2026-01-11T05:14:11.078331114Z [inf]    [RESOLVE] MATIC Round #1875: 0.3794 -> 0.3794 = SAME
+2026-01-11T05:14:11.078341210Z [inf]    [RESOLVE] XRP Round #1876: 2.0903 -> 2.0926 = UP
+2026-01-11T05:14:11.078348990Z [inf]    [RESOLVE] ADA Round #1877: 0.3907 -> 0.3909 = UP
+2026-01-11T05:14:11.078354478Z [inf]    [RESOLVE] DOGE Round #1878: 0.13889 -> 0.13919 = UP
+2026-01-11T05:14:11.078359093Z [inf]    [RESOLVE] DOT Round #1879: 2.099 -> 2.105 = UP
+2026-01-11T05:14:11.078364949Z [inf]    [RESOLVE] AVAX Round #1880: 13.75 -> 13.77 = UP
+2026-01-11T05:14:11.078370021Z [inf]    [BETS] Resolved 0 bets for round #1871
+2026-01-11T05:14:11.078375428Z [inf]    [BETS] Resolved 0 bets for round #1872
+2026-01-11T05:14:11.078382778Z [inf]    [BETS] Resolved 0 bets for round #1873
+2026-01-11T05:14:11.078387170Z [inf]    [BETS] Resolved 0 bets for round #1874
+2026-01-11T05:14:11.080285149Z [inf]    [BETS] Resolved 0 bets for round #1878
+2026-01-11T05:14:11.080291107Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080294761Z [inf]    [BETS] Resolved 0 bets for round #1879
+2026-01-11T05:14:11.080302618Z [inf]    [BETS] Resolved 0 bets for round #1880
+2026-01-11T05:14:11.080302659Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080310360Z [inf]  [SUCCESS] Resolved 10 rounds in parallel. Pausing exactly 15s before next round starts instantly...
+2026-01-11T05:14:11.080314608Z [inf]  ?? User left user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080318128Z [inf]  [ROUNDS] Starting new round immediately after pause!
+2026-01-11T05:14:11.080323555Z [inf]  ?? User left user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080325806Z [inf]  [PRICES] Fetching prices...
+2026-01-11T05:14:11.080332365Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080333631Z [inf]  [BINANCE] Got 10 prices in 0.29s
+2026-01-11T05:14:11.080336556Z [inf]  [PRICES] Fetching prices...
+2026-01-11T05:14:11.080341320Z [inf]  ?? User left user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080341660Z [inf]  [ROUNDS] Round started at 1768107504 and will end at 1768108404
+2026-01-11T05:14:11.080349777Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080350219Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080357404Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080358792Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080366445Z [inf]  ?? User left user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.080366846Z [inf]  [ROUNDS] Round ended! Fetching end prices...
+2026-01-11T05:14:11.083656321Z [inf]  [BINANCE] Got 10 prices in 0.09s
+2026-01-11T05:14:11.083661577Z [inf]    [RESOLVE] ADA Round #1887: 0.3909 -> 0.3912 = UP
+2026-01-11T05:14:11.083667706Z [inf]    [BETS] Resolved 0 bets for round #1886
+2026-01-11T05:14:11.083670032Z [inf]  [RESOLUTION] Got prices for 10 cryptos. Resolving all rounds in parallel...
+2026-01-11T05:14:11.083696138Z [inf]    [RESOLVE] BTC Round #1881: 90775.44 -> 90783.87 = UP
+2026-01-11T05:14:11.083710114Z [inf]    [RESOLVE] DOGE Round #1888: 0.13918 -> 0.13907 = DOWN
+2026-01-11T05:14:11.083742122Z [inf]    [RESOLVE] ETH Round #1882: 3097.77 -> 3098.16 = UP
+2026-01-11T05:14:11.083744888Z [inf]    [ERROR] Error resolving ADA: connection pool exhausted
+2026-01-11T05:14:11.083754376Z [inf]    [RESOLVE] SOL Round #1883: 136.2 -> 136.06 = DOWN
+2026-01-11T05:14:11.083755941Z [inf]    [ERROR] Error resolving DOGE: connection pool exhausted
+2026-01-11T05:14:11.083758260Z [inf]    [RESOLVE] DOT Round #1889: 2.106 -> 2.108 = UP
+2026-01-11T05:14:11.083763204Z [inf]    [RESOLVE] BNB Round #1884: 912.95 -> 911.68 = DOWN
+2026-01-11T05:14:11.083764715Z [inf]    [ERROR] Error resolving DOT: connection pool exhausted
+2026-01-11T05:14:11.083770921Z [inf]    [RESOLVE] AVAX Round #1890: 13.77 -> 13.78 = UP
+2026-01-11T05:14:11.083772586Z [inf]    [RESOLVE] MATIC Round #1885: 0.3794 -> 0.3794 = SAME
+2026-01-11T05:14:11.083773433Z [inf]    [ERROR] Error resolving AVAX: connection pool exhausted
+2026-01-11T05:14:11.083781595Z [inf]    [RESOLVE] XRP Round #1886: 2.093 -> 2.0914 = DOWN
+2026-01-11T05:14:11.083784425Z [inf]    [BETS] Resolved 1 bets for round #1881
+2026-01-11T05:14:11.083794323Z [inf]    [BETS] Resolved 0 bets for round #1882
+2026-01-11T05:14:11.083813116Z [inf]    [BETS] Resolved 0 bets for round #1883
+2026-01-11T05:14:11.083823637Z [inf]    [BETS] Resolved 0 bets for round #1884
+2026-01-11T05:14:11.083832763Z [inf]    [BETS] Resolved 0 bets for round #1885
+2026-01-11T05:14:11.085848031Z [inf]  [SUCCESS] Resolved 6 rounds in parallel. Pausing exactly 15s before next round starts instantly...
+2026-01-11T05:14:11.085857855Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.085865449Z [inf]  ?? User left user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:11.085872027Z [inf]  ? User joined user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:14:42.029852186Z [inf]  ?? User left user-FaFAzzKu4PiNPNAdgmp9EGprMhR9LPrekuGuENcraW4f
+2026-01-11T05:15:22.030712372Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.143:55612 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T05:16:41.029791129Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.143:55698 socket shutdown error: [Errno 9] Bad file descriptorserver=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.143:47768 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T05:19:21.030365570Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.179:35992 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T05:22:02.030739887Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.33.136:45456 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T05:30:05.185001999Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T05:30:05.185011857Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185014157Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T05:30:05.185020907Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T05:30:05.185094356Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185106964Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T05:30:05.185116320Z [err]      return next(self.gen)
+2026-01-11T05:30:05.185137217Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185144036Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T05:30:05.185148191Z [err]    File "/app/main.py", line 119, in get_db_cursor
+2026-01-11T05:30:05.185153731Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T05:30:05.185164535Z [err]  [2026-01-11 05:29:59,595] ERROR in app: Exception on /api/profile [GET]
+2026-01-11T05:30:05.185167295Z [err]      conn = pool.getconn()
+2026-01-11T05:30:05.185178926Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185180727Z [err]      return self._getconn(key)
+2026-01-11T05:30:05.185184154Z [err]  Traceback (most recent call last):
+2026-01-11T05:30:05.185189185Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T05:30:05.185190837Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185195172Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T05:30:05.185203579Z [err]      response = self.full_dispatch_request()
+2026-01-11T05:30:05.185212308Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185296695Z [err]  [2026-01-11 05:29:59,588] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T05:30:05.185302538Z [err]  Traceback (most recent call last):
+2026-01-11T05:30:05.185308994Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T05:30:05.185315158Z [err]      response = self.full_dispatch_request()
+2026-01-11T05:30:05.185323292Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185328939Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T05:30:05.185336564Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T05:30:05.185342938Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185348794Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T05:30:05.185356160Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T05:30:05.185363010Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185371424Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T05:30:05.185379556Z [err]      rv = self.dispatch_request()
+2026-01-11T05:30:05.185385305Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185395765Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T05:30:05.185404388Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T05:30:05.185412154Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.185420404Z [err]    File "/app/main.py", line 618, in get_current_round
+2026-01-11T05:30:05.185425793Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T05:30:05.185429672Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T05:30:05.190856242Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T05:30:05.190870025Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.190876793Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T05:30:05.190883109Z [err]      rv = self.dispatch_request()
+2026-01-11T05:30:05.190890385Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.190899564Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T05:30:05.190905901Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T05:30:05.190911762Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.190916924Z [err]    File "/app/main.py", line 491, in get_profile
+2026-01-11T05:30:05.190923371Z [err]      with get_db_cursor() as (cursor, conn):
+2026-01-11T05:30:05.190928400Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.190933729Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T05:30:05.190940468Z [err]      return next(self.gen)
+2026-01-11T05:30:05.190945911Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T05:30:05.190952741Z [err]    File "/app/main.py", line 119, in get_db_cursor
+2026-01-11T05:30:05.190958722Z [err]      conn = pool.getconn()
+2026-01-11T05:30:05.190964510Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T05:30:05.190972297Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T05:30:05.190977893Z [err]      return self._getconn(key)
+2026-01-11T05:30:05.190984779Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.190990184Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T05:30:05.191381133Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T05:30:05.191387002Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T05:30:05.191392684Z [err]  [2026-01-11 05:29:59,597] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T05:30:05.191399111Z [err]  Traceback (most recent call last):
+2026-01-11T05:30:05.191406244Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T05:30:05.191412474Z [err]      response = self.full_dispatch_request()
+2026-01-11T05:30:05.191418181Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.191422861Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T05:30:05.191430119Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T05:30:05.191436498Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.191442335Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T05:30:05.191447217Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T05:30:05.191453855Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.191459593Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T05:30:05.191465197Z [err]      rv = self.dispatch_request()
+2026-01-11T05:30:05.191470818Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.191478232Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T05:30:05.191484388Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T05:30:05.191489290Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.192334206Z [err]    File "/app/main.py", line 618, in get_current_round
+2026-01-11T05:30:05.192338670Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T05:30:05.192344368Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.192349187Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T05:30:05.192354118Z [err]      return next(self.gen)
+2026-01-11T05:30:05.192359044Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T05:30:05.192363073Z [err]    File "/app/main.py", line 119, in get_db_cursor
+2026-01-11T05:30:05.192372508Z [err]      conn = pool.getconn()
+2026-01-11T05:30:05.192377676Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T05:30:05.192381724Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T05:30:05.192385479Z [err]      return self._getconn(key)
+2026-01-11T05:30:05.192390771Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.192396178Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T05:30:05.192400388Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T05:30:05.192404509Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T05:30:05.192408787Z [err]  [2026-01-11 05:29:59,600] ERROR in app: Exception on /api/rounds [GET]
+2026-01-11T05:30:05.192413316Z [err]  Traceback (most recent call last):
+2026-01-11T05:30:05.192417716Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+2026-01-11T05:30:05.192424922Z [err]      response = self.full_dispatch_request()
+2026-01-11T05:30:05.192432105Z [err]                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.192436834Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+2026-01-11T05:30:05.192441135Z [err]      rv = self.handle_user_exception(e)
+2026-01-11T05:30:05.194722691Z [err]    File "/root/.nix-profile/lib/python3.12/contextlib.py", line 137, in __enter__
+2026-01-11T05:30:05.194730798Z [err]      return next(self.gen)
+2026-01-11T05:30:05.194736197Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T05:30:05.194742651Z [err]    File "/app/main.py", line 119, in get_db_cursor
+2026-01-11T05:30:05.194747706Z [err]      conn = pool.getconn()
+2026-01-11T05:30:05.194753817Z [err]             ^^^^^^^^^^^^^^
+2026-01-11T05:30:05.194758001Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 169, in getconn
+2026-01-11T05:30:05.194762362Z [err]      return self._getconn(key)
+2026-01-11T05:30:05.194825472Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.194829927Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+2026-01-11T05:30:05.194834503Z [err]      return cors_after_request(app.make_response(f(*args, **kwargs)))
+2026-01-11T05:30:05.194839313Z [err]                                                  ^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.194843681Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+2026-01-11T05:30:05.194849013Z [err]      rv = self.dispatch_request()
+2026-01-11T05:30:05.194857249Z [err]           ^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.194863522Z [err]    File "/opt/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+2026-01-11T05:30:05.194867616Z [err]      return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+2026-01-11T05:30:05.194871876Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.194876616Z [err]    File "/app/main.py", line 618, in get_current_round
+2026-01-11T05:30:05.194882620Z [err]      with get_db_cursor() as (cursor, _):
+2026-01-11T05:30:05.194888017Z [err]           ^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.197345805Z [err]             ^^^^^^^^^^^^^^^^^^
+2026-01-11T05:30:05.197352851Z [err]    File "/opt/venv/lib/python3.12/site-packages/psycopg2/pool.py", line 92, in _getconn
+2026-01-11T05:30:05.197361477Z [err]      raise PoolError("connection pool exhausted")
+2026-01-11T05:30:05.197368487Z [err]  psycopg2.pool.PoolError: connection pool exhausted
+2026-01-11T05:31:27.030462540Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.32:13014 socket shutdown error: [Errno 9] Bad file descriptor
+2026-01-11T05:40:40.030138073Z [err]  server=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.32:13122 socket shutdown error: [Errno 9] Bad file descriptorserver=price-production-c1cb.up.railway.app//socket.io/ client=152.59.146.32:13118 socket shutdown error: [Errno 9] Bad file descriptor
