@@ -4,27 +4,44 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { useWalletAuth } from "@/hooks/useWalletAuth";
+import { useEVMWalletAuth } from "@/hooks/useEVMWalletAuth";
+import { useChainContext, type ChainType } from "@/context/WalletContext";
 import { OnboardingModal } from "@/components/OnboardingModal";
 import { Wallet, Loader2 } from "lucide-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 export default function Login() {
   const { isAuthenticated, login, setNeedsOnboarding, needsOnboarding, setWalletAddress, walletAddress } = useAuth();
-  const { connected, connecting, isSigning, error, getSignature, disconnectWallet, publicKey } = useWalletAuth();
+  const { selectedChain, setSelectedChain } = useChainContext();
+  
+  const solanaWallet = useWalletAuth();
+  const evmWallet = useEVMWalletAuth();
   const { setVisible } = useWalletModal();
-  const { disconnect } = useWallet();
+  const { disconnect: disconnectSolana } = useWallet();
+  const { isConnected: evmConnected, address: evmAddress } = useAccount();
+  
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [hasTriedEVMLogin, setHasTriedEVMLogin] = useState(false);
 
   useEffect(() => {
-    const handleWalletConnection = async () => {
-      if (connected && publicKey && !isAuthenticated && !isLoggingIn && !needsOnboarding) {
+    const handleSolanaConnection = async () => {
+      if (
+        selectedChain === "solana" &&
+        solanaWallet.connected && 
+        solanaWallet.publicKey && 
+        !isAuthenticated && 
+        !isLoggingIn && 
+        !needsOnboarding
+      ) {
         setIsLoggingIn(true);
         setLoginError(null);
         
         try {
-          const result = await getSignature();
+          const result = await solanaWallet.getSignature();
           
           if (!result) {
             setIsLoggingIn(false);
@@ -34,7 +51,7 @@ export default function Login() {
           setWalletAddress(result.walletAddress);
 
           try {
-            await login(result.walletAddress, result.signature);
+            await login(result.walletAddress, result.signature, undefined, undefined, result.chainType);
           } catch (err) {
             const message = err instanceof Error ? err.message : "Login failed";
             
@@ -42,7 +59,7 @@ export default function Login() {
               setNeedsOnboarding(true);
             } else if (message.includes("No active login session") || message.includes("Invalid signature")) {
               setLoginError("Session expired. Please try connecting again.");
-              await disconnect();
+              await disconnectSolana();
             } else {
               setLoginError(message);
             }
@@ -55,30 +72,100 @@ export default function Login() {
       }
     };
 
-    handleWalletConnection();
-  }, [connected, publicKey, isAuthenticated, isLoggingIn, needsOnboarding]);
+    handleSolanaConnection();
+  }, [selectedChain, solanaWallet.connected, solanaWallet.publicKey, isAuthenticated, isLoggingIn, needsOnboarding]);
+
+  useEffect(() => {
+    const handleEVMConnection = async () => {
+      if (
+        selectedChain === "evm" &&
+        evmConnected && 
+        evmAddress && 
+        !isAuthenticated && 
+        !isLoggingIn && 
+        !needsOnboarding &&
+        !hasTriedEVMLogin
+      ) {
+        setIsLoggingIn(true);
+        setLoginError(null);
+        setHasTriedEVMLogin(true);
+        
+        try {
+          const result = await evmWallet.getSignature();
+          
+          if (!result) {
+            setIsLoggingIn(false);
+            return;
+          }
+
+          setWalletAddress(result.walletAddress);
+
+          try {
+            await login(result.walletAddress, result.signature, undefined, undefined, result.chainType);
+          } catch (err) {
+            const message = err instanceof Error ? err.message : "Login failed";
+            
+            if (message.includes("Name and username required")) {
+              setNeedsOnboarding(true);
+            } else if (message.includes("No active login session") || message.includes("Invalid signature")) {
+              setLoginError("Session expired. Please try connecting again.");
+              await evmWallet.disconnectWallet();
+            } else {
+              setLoginError(message);
+            }
+          }
+        } catch (err) {
+          setLoginError(err instanceof Error ? err.message : "Connection failed");
+        } finally {
+          setIsLoggingIn(false);
+        }
+      }
+    };
+
+    handleEVMConnection();
+  }, [selectedChain, evmConnected, evmAddress, isAuthenticated, isLoggingIn, needsOnboarding, hasTriedEVMLogin]);
+
+  useEffect(() => {
+    if (!evmConnected) {
+      setHasTriedEVMLogin(false);
+    }
+  }, [evmConnected]);
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
 
-  const handleConnect = () => {
+  const handleSolanaConnect = () => {
     setLoginError(null);
+    setSelectedChain("solana");
     setVisible(true);
+  };
+
+  const handleChainSelect = (chain: ChainType) => {
+    setSelectedChain(chain);
+    setLoginError(null);
   };
 
   const handleOnboardingComplete = async (name: string, username: string) => {
     if (!walletAddress) return;
 
-    const result = await getSignature();
+    let result;
+    if (selectedChain === "solana") {
+      result = await solanaWallet.getSignature();
+    } else {
+      result = await evmWallet.getSignature();
+    }
+    
     if (!result) {
       throw new Error("Failed to sign message");
     }
 
-    await login(walletAddress, result.signature, name, username);
+    await login(walletAddress, result.signature, name, username, result.chainType);
   };
 
-  const isProcessing = connecting || isSigning || isLoggingIn;
+  const isSolanaProcessing = solanaWallet.connecting || solanaWallet.isSigning || (isLoggingIn && selectedChain === "solana");
+  const isEVMProcessing = evmWallet.connecting || evmWallet.isSigning || (isLoggingIn && selectedChain === "evm");
+  const error = solanaWallet.error || evmWallet.error || loginError;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -92,45 +179,130 @@ export default function Login() {
           </div>
           <CardTitle className="text-2xl font-display">Connect Wallet</CardTitle>
           <CardDescription>
-            Sign in with your Solana wallet to start predicting
+            Sign in with your crypto wallet to start predicting
           </CardDescription>
         </CardHeader>
         
         <CardContent className="space-y-4">
-          <Button
-            className="w-full h-12 gap-2 text-base"
-            onClick={handleConnect}
-            disabled={isProcessing}
-            data-testid="button-connect-wallet"
-          >
-            {isProcessing ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                {connecting ? "Connecting..." : isSigning ? "Signing..." : "Logging in..."}
-              </>
-            ) : (
-              <>
-                <Wallet className="h-5 w-5" />
-                Connect Wallet
-              </>
-            )}
-          </Button>
+          <div className="flex gap-2 p-1 bg-muted rounded-lg">
+            <button
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                selectedChain === "solana" 
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              onClick={() => handleChainSelect("solana")}
+              data-testid="button-chain-solana"
+            >
+              Solana
+            </button>
+            <button
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                selectedChain === "evm" 
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              onClick={() => handleChainSelect("evm")}
+              data-testid="button-chain-evm"
+            >
+              Ethereum
+            </button>
+          </div>
 
-          {(error || loginError) && (
+          {selectedChain === "solana" ? (
+            <Button
+              className="w-full h-12 gap-2 text-base"
+              onClick={handleSolanaConnect}
+              disabled={isSolanaProcessing}
+              data-testid="button-connect-solana"
+            >
+              {isSolanaProcessing ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  {solanaWallet.connecting ? "Connecting..." : solanaWallet.isSigning ? "Signing..." : "Logging in..."}
+                </>
+              ) : (
+                <>
+                  <Wallet className="h-5 w-5" />
+                  Connect Solana Wallet
+                </>
+              )}
+            </Button>
+          ) : (
+            <div className="w-full" data-testid="button-connect-evm">
+              <ConnectButton.Custom>
+                {({
+                  account,
+                  chain,
+                  openConnectModal,
+                  mounted,
+                }) => {
+                  const ready = mounted;
+                  const connected = ready && account && chain;
+
+                  return (
+                    <div
+                      {...(!ready && {
+                        'aria-hidden': true,
+                        style: {
+                          opacity: 0,
+                          pointerEvents: 'none',
+                          userSelect: 'none',
+                        },
+                      })}
+                    >
+                      {!connected ? (
+                        <Button
+                          className="w-full h-12 gap-2 text-base"
+                          onClick={openConnectModal}
+                          disabled={isEVMProcessing}
+                        >
+                          {isEVMProcessing ? (
+                            <>
+                              <Loader2 className="h-5 w-5 animate-spin" />
+                              {evmWallet.connecting ? "Connecting..." : evmWallet.isSigning ? "Signing..." : "Logging in..."}
+                            </>
+                          ) : (
+                            <>
+                              <Wallet className="h-5 w-5" />
+                              Connect Ethereum Wallet
+                            </>
+                          )}
+                        </Button>
+                      ) : (
+                        <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
+                          <div className="flex-1">
+                            <div className="text-sm font-medium">{account.displayName}</div>
+                            <div className="text-xs text-muted-foreground">{chain.name}</div>
+                          </div>
+                          {isEVMProcessing && <Loader2 className="h-4 w-4 animate-spin" />}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }}
+              </ConnectButton.Custom>
+            </div>
+          )}
+
+          {error && (
             <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-3 text-sm text-destructive">
-              {error || loginError}
+              {error}
             </div>
           )}
 
           <div className="text-center text-xs text-muted-foreground">
-            Supports Phantom, Solflare, and other Solana wallets
+            {selectedChain === "solana" 
+              ? "Supports Phantom, Solflare, and other Solana wallets"
+              : "Supports MetaMask, Rainbow, Coinbase Wallet, and more"
+            }
           </div>
 
           <div className="pt-4 border-t border-border">
             <div className="space-y-2 text-sm text-muted-foreground">
               <p className="flex items-center gap-2">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs text-primary font-medium">1</span>
-                Connect your Solana wallet
+                Connect your crypto wallet
               </p>
               <p className="flex items-center gap-2">
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs text-primary font-medium">2</span>

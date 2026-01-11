@@ -7,7 +7,7 @@ export function useWalletAuth() {
   const [error, setError] = useState<string | null>(null);
   const [isSigning, setIsSigning] = useState(false);
 
-  const getSignature = useCallback(async (): Promise<{ walletAddress: string; signature: string } | null> => {
+  const getSignature = useCallback(async (): Promise<{ walletAddress: string; signature: string; chainType: "solana" } | null> => {
     setError(null);
     setIsSigning(true);
 
@@ -26,7 +26,7 @@ export function useWalletAuth() {
 
       const signatureBase64 = btoa(String.fromCharCode.apply(null, Array.from(signatureBytes)));
 
-      return { walletAddress, signature: signatureBase64 };
+      return { walletAddress, signature: signatureBase64, chainType: "solana" as const };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Failed to sign message";
       setError(errorMessage);
@@ -50,6 +50,7 @@ export function useWalletAuth() {
     isSigning,
     error,
     walletName: wallet?.adapter?.name || null,
+    chainType: "solana" as const,
     getSignature,
     disconnectWallet,
   };

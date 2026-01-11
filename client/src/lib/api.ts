@@ -35,12 +35,13 @@ export const api = {
   getNonce: (walletAddress: string) =>
     apiRequest<{ message: string }>("POST", "/api/auth/phantom/nonce", { wallet_address: walletAddress }),
   
-  verifySignature: (walletAddress: string, signature: string, name?: string, username?: string) =>
+  verifySignature: (walletAddress: string, signature: string, name?: string, username?: string, chainType: string = "solana") =>
     apiRequest("POST", "/api/auth/phantom/verify", { 
       wallet_address: walletAddress, 
       signature,
       name,
-      username 
+      username,
+      chain_type: chainType
     }),
 
   logout: () => apiRequest("POST", "/logout"),

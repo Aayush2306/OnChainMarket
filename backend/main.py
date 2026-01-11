@@ -32,6 +32,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import base58
 from nacl.signing import VerifyKey
 from nacl.exceptions import BadSignatureError
+from eth_account.messages import encode_defunct
+from web3 import Web3
 import json
 from validation import (
     validate_bet_amount,
@@ -434,6 +436,7 @@ def phantom_verify():
     signature_b64 = data.get("signature")
     name = data.get("name")
     username = data.get("username")
+    chain_type = data.get("chain_type", "solana")
 
     session_wallet = session.get("phantom_wallet")
     nonce = session.get("phantom_nonce")
@@ -444,11 +447,20 @@ def phantom_verify():
         return jsonify({"error": "No active login session"}), 400
 
     message = f"On-Chain Market login\nWallet: {wallet_address}\nNonce: {nonce}"
+    
     try:
-        signature = base64.b64decode(signature_b64)
-        pubkey_bytes = base58.b58decode(wallet_address)
-        VerifyKey(pubkey_bytes).verify(message.encode("utf-8"), signature)
-    except (ValueError, BadSignatureError):
+        if chain_type == "evm":
+            w3 = Web3()
+            message_hash = encode_defunct(text=message)
+            recovered_address = w3.eth.account.recover_message(message_hash, signature=signature_b64)
+            if recovered_address.lower() != wallet_address.lower():
+                return jsonify({"error": "Invalid signature"}), 401
+        else:
+            signature = base64.b64decode(signature_b64)
+            pubkey_bytes = base58.b58decode(wallet_address)
+            VerifyKey(pubkey_bytes).verify(message.encode("utf-8"), signature)
+    except (ValueError, BadSignatureError, Exception) as e:
+        print(f"Signature verification failed: {e}")
         return jsonify({"error": "Invalid signature"}), 401
 
     with get_db_cursor(real_dict=True) as (cursor, conn):
