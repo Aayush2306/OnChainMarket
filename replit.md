@@ -98,3 +98,11 @@ Preferred communication style: Simple, everyday language.
 - `.text-gradient`: Primary color gradient text
 - `.safe-bottom`: Safe area padding for mobile devices
 - `.touch-manipulation`: Better touch response
+
+### Backend Improvements (January 2026)
+- **On-chain rounds**: Now checks every 5 minutes for missing rounds (not just at midnight), creates rounds on startup
+- **Custom bet fix**: Bets properly marked as "lost" when no winners exist (previously stayed "pending")
+- **Session improvements**: 7-day session lifetime, nonce expiry after 5 minutes, better error logging
+- **Webhook support**: Optional webhooks for round resolution events
+  - Environment variables: `WEBHOOK_BET_RESULT`, `WEBHOOK_ROUND_RESOLVED`, `WEBHOOK_CUSTOM_BET_RESOLVED`, `WEBHOOK_ONCHAIN_RESOLVED`
+  - Optional `WEBHOOK_SECRET` for HMAC signature verification
