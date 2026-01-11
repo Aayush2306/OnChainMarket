@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { api } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
@@ -12,6 +12,7 @@ import {
   TrendingUp,
   Coins
 } from "lucide-react";
+import profileImg from "@/assets/profile.png";
 
 const rankColors = [
   "from-yellow-400 to-amber-500",
@@ -70,6 +71,7 @@ function LeaderboardTable({ entries, type }: LeaderboardTableProps) {
             </div>
             
             <Avatar className="h-9 w-9 sm:h-12 sm:w-12 border-2 border-card-border shrink-0">
+              <AvatarImage src={profileImg} alt={entry.username || "User"} />
               <AvatarFallback className="bg-primary/10 text-primary font-semibold text-sm sm:text-lg">
                 {entry.username?.charAt(0).toUpperCase() || "?"}
               </AvatarFallback>
@@ -107,6 +109,7 @@ function LeaderboardTable({ entries, type }: LeaderboardTableProps) {
           </div>
 
           <Avatar className="h-7 w-7 sm:h-9 sm:w-9 shrink-0">
+            <AvatarImage src={profileImg} alt={entry.username || "User"} />
             <AvatarFallback className="bg-card text-xs sm:text-sm font-medium">
               {entry.username?.charAt(0).toUpperCase() || "?"}
             </AvatarFallback>
