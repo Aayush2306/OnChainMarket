@@ -36,10 +36,14 @@ function OnchainCard({ category, config }: OnchainCardProps) {
   const [timeLeft, setTimeLeft] = useState(0);
 
   const { data: round, isLoading } = useQuery<OnchainRound | null>({
-    queryKey: ["/api/onchain/round", category],
+    queryKey: ["/api/onchain/rounds", category],
     queryFn: async () => {
       try {
         const data = await api.getOnchainRound(category);
+        // API returns an array, get the first round
+        if (Array.isArray(data) && data.length > 0) {
+          return data[0] as OnchainRound;
+        }
         if ("waiting" in (data as object)) return null;
         return data as OnchainRound;
       } catch {
@@ -58,7 +62,7 @@ function OnchainCard({ category, config }: OnchainCardProps) {
       setAmount("");
       setSelectedPrediction(null);
       refreshUser();
-      queryClient.invalidateQueries({ queryKey: ["/api/onchain/round", category] });
+      queryClient.invalidateQueries({ queryKey: ["/api/onchain/rounds", category] });
     },
     onError: (err) => {
       const message = err instanceof Error ? err.message : "Failed to place bet";

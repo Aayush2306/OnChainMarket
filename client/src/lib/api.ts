@@ -67,7 +67,7 @@ export const api = {
   
   // On-chain endpoints
   getOnchainRound: (category: string) =>
-    apiRequest("GET", `/api/onchain/round?category=${category}`),
+    apiRequest("GET", `/api/onchain/rounds?category=${category}`),
   
   placeOnchainBet: (roundId: number, category: string, prediction: string, amount: number) =>
     apiRequest("POST", "/api/onchain/bet", { round_id: roundId, category, prediction, amount }),
