@@ -3,6 +3,9 @@ import { z } from "zod";
 // Export auth models for Replit Auth integration
 export * from "./models/auth";
 
+// Export betting models
+export * from "./models/betting";
+
 // Legacy User Types (for Railway backend compatibility)
 export interface LegacyUser {
   id: string;
