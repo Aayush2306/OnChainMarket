@@ -155,28 +155,36 @@ pool = ThreadedConnectionPool(
 
 @contextmanager
 def get_db_cursor(real_dict=False):
-    conn = pool.getconn()
+    conn = None
     try:
-        # Test connection health before using
-        conn.isolation_level
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor if real_dict else None)
-        yield cursor, conn
-        conn.commit()
-    except (psycopg2.OperationalError, psycopg2.InterfaceError) as e:
-        # Connection is dead, remove it from pool and get a new one
-        try:
-            pool.putconn(conn, close=True)
-        except:
-            pass
         conn = pool.getconn()
+        # Test connection health before using
+        try:
+            conn.isolation_level
+        except (psycopg2.OperationalError, psycopg2.InterfaceError):
+            # Connection is dead, close it and get a new one
+            try:
+                pool.putconn(conn, close=True)
+            except:
+                pass
+            conn = pool.getconn()
+        
         cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor if real_dict else None)
         yield cursor, conn
         conn.commit()
     except Exception as e:
-        conn.rollback()
+        if conn:
+            try:
+                conn.rollback()
+            except:
+                pass
         raise e
     finally:
-        pool.putconn(conn)
+        if conn:
+            try:
+                pool.putconn(conn)
+            except:
+                pass
 
 
 
