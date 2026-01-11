@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { SiTelegram, SiGitbook } from "react-icons/si";
 import { FaXTwitter } from "react-icons/fa6";
-import { TrendingUp } from "lucide-react";
+import logoUrl from "../../assets/main-logo.png";
 
 export function Footer() {
   return (
@@ -10,9 +10,7 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer" data-testid="footer-logo">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <TrendingUp className="h-5 w-5 text-primary-foreground" />
-              </div>
+              <img src={logoUrl} alt="On-Chain Market" className="h-8 w-8 rounded-lg object-contain" />
               <span className="font-display text-lg font-bold">On-Chain Market</span>
             </div>
           </Link>
