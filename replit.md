@@ -29,9 +29,12 @@ Preferred communication style: Simple, everyday language.
 
 ### Authentication Flow
 - **Wallet-based Auth**: Phantom wallet integration for Solana
-- **Flow**: User connects wallet → Signs nonce message → Server verifies signature → Session created
+- **Flow**: User connects wallet → Signs nonce message → Server verifies signature → JWT token issued
 - **Onboarding**: New users must provide name/username after first wallet connection
-- **Session Persistence**: PostgreSQL-backed sessions via connect-pg-simple
+- **Dual Auth Support**: JWT tokens (primary, for Safari/iPhone) + session cookies (fallback)
+- **JWT Storage**: Tokens stored in localStorage, sent via Authorization header
+- **Nonce Storage**: Database-backed nonces (auth_nonces table) for cross-browser compatibility
+- **Token Expiry**: 7-day JWT lifetime
 
 ### Data Flow
 1. Frontend calls external Railway-hosted API (`VITE_API_URL`)
@@ -75,6 +78,14 @@ Preferred communication style: Simple, everyday language.
 - **Carousel**: Embla Carousel React
 
 ## Recent Changes
+
+### Safari/iPhone Authentication Fix (January 2026)
+- Implemented JWT-based authentication to bypass Safari's ITP cookie blocking
+- Added `auth_nonces` database table for storing authentication nonces (replaces session-based storage)
+- Backend returns JWT token on successful login, stored in localStorage
+- All protected endpoints now support both JWT (Authorization header) and session cookies
+- Frontend sends JWT token via `Authorization: Bearer <token>` header on all API requests
+- Token automatically cleared on logout or when profile fetch fails
 
 ### Mobile Responsiveness (January 2026)
 - Added comprehensive mobile-first responsive design across all pages
