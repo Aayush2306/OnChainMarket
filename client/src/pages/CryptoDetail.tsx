@@ -47,6 +47,14 @@ const coinLogos: Record<string, string> = {
   AVAX: avaxLogo,
 };
 
+interface LiveBet {
+  id: number;
+  user_id: string;
+  username?: string;
+  amount: number;
+  direction: string;
+}
+
 export default function CryptoDetail() {
   const { symbol } = useParams<{ symbol: string }>();
   const upperSymbol = symbol?.toUpperCase() || "";
@@ -59,6 +67,7 @@ export default function CryptoDetail() {
   const [amount, setAmount] = useState("");
   const [selectedDirection, setSelectedDirection] = useState<"up" | "down" | null>(null);
   const [timeLeft, setTimeLeft] = useState(0);
+  const [isRoundEnded, setIsRoundEnded] = useState(false);
 
   useEffect(() => {
     if (isConnected && upperSymbol) {
@@ -82,9 +91,26 @@ export default function CryptoDetail() {
         return null;
       }
     },
-    staleTime: 30000,
-    refetchInterval: isConnected ? false : 5000,
+    staleTime: isRoundEnded ? 0 : 30000,
+    refetchInterval: isRoundEnded ? 2000 : (isConnected ? false : 5000),
   });
+
+  const { data: liveBets = [] } = useQuery<LiveBet[]>({
+    queryKey: ["/api/live-bets", round?.id, upperSymbol],
+    queryFn: async () => {
+      if (!round?.id) return [];
+      try {
+        const data = await api.getLiveBets(round.id, upperSymbol);
+        return (data as { bets?: LiveBet[] })?.bets || data as LiveBet[];
+      } catch {
+        return [];
+      }
+    },
+    enabled: !!round?.id,
+    staleTime: 10000,
+  });
+
+  const userAlreadyBet = user && liveBets.some(bet => bet.user_id === user.id);
 
   const placeBetMutation = useMutation({
     mutationFn: async ({ roundId, direction, betAmount }: { roundId: number; direction: string; betAmount: number }) => {
@@ -112,9 +138,11 @@ export default function CryptoDetail() {
       const remaining = round.end_time - now;
       setTimeLeft(Math.max(0, remaining));
       
-      // When round ends, immediately fetch new round
       if (remaining <= 0) {
+        setIsRoundEnded(true);
         queryClient.invalidateQueries({ queryKey: ["/api/rounds", upperSymbol] });
+      } else {
+        setIsRoundEnded(false);
       }
     };
 
@@ -219,12 +247,18 @@ export default function CryptoDetail() {
                     </p>
                   </div>
 
+                  {userAlreadyBet && (
+                    <div className="text-center py-3 px-4 rounded-lg bg-primary/10 border border-primary/20">
+                      <p className="text-sm font-medium text-primary">You've already placed a bet this round</p>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <Button
                       variant={selectedDirection === "up" ? "default" : "outline"}
                       className={`h-14 sm:h-16 flex-col gap-1 sm:gap-2 touch-manipulation ${selectedDirection === "up" ? "bg-win hover:bg-win/90 border-win" : ""}`}
                       onClick={() => setSelectedDirection("up")}
-                      disabled={isExpired}
+                      disabled={isExpired || !!userAlreadyBet}
                       data-testid="button-up"
                     >
                       <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -234,7 +268,7 @@ export default function CryptoDetail() {
                       variant={selectedDirection === "down" ? "default" : "outline"}
                       className={`h-14 sm:h-16 flex-col gap-1 sm:gap-2 touch-manipulation ${selectedDirection === "down" ? "bg-loss hover:bg-loss/90 border-loss" : ""}`}
                       onClick={() => setSelectedDirection("down")}
-                      disabled={isExpired}
+                      disabled={isExpired || !!userAlreadyBet}
                       data-testid="button-down"
                     >
                       <TrendingDown className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -251,7 +285,7 @@ export default function CryptoDetail() {
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
                         className="font-mono text-base sm:text-lg"
-                        disabled={isExpired}
+                        disabled={isExpired || !!userAlreadyBet}
                         data-testid="input-amount"
                       />
                     </div>
@@ -263,7 +297,7 @@ export default function CryptoDetail() {
                           size="sm"
                           className="text-xs sm:text-sm touch-manipulation"
                           onClick={() => setAmount(val.toString())}
-                          disabled={isExpired}
+                          disabled={isExpired || !!userAlreadyBet}
                         >
                           {val}
                         </Button>
@@ -274,7 +308,7 @@ export default function CryptoDetail() {
                       size="sm"
                       className="w-full text-xs sm:text-sm touch-manipulation"
                       onClick={() => setAmount(user?.credits?.toString() || "0")}
-                      disabled={isExpired}
+                      disabled={isExpired || !!userAlreadyBet}
                     >
                       MAX ({user?.credits?.toLocaleString() || 0})
                     </Button>
@@ -282,7 +316,7 @@ export default function CryptoDetail() {
 
                   <Button
                     className="w-full h-11 sm:h-12 text-base sm:text-lg touch-manipulation"
-                    disabled={!selectedDirection || !amount || isExpired || placeBetMutation.isPending}
+                    disabled={!selectedDirection || !amount || isExpired || !!userAlreadyBet || placeBetMutation.isPending}
                     onClick={handlePlaceBet}
                     data-testid="button-place-bet"
                   >
@@ -291,6 +325,8 @@ export default function CryptoDetail() {
                         <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-spin" />
                         Placing Bet...
                       </>
+                    ) : userAlreadyBet ? (
+                      "Bet Already Placed"
                     ) : (
                       "Place Bet"
                     )}
