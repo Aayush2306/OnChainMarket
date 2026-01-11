@@ -4,7 +4,7 @@ import { useAuth } from "./AuthContext";
 import { queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
-const SOCKET_URL = "https://price-production-c1cb.up.railway.app";
+const SOCKET_URL = import.meta.env.VITE_API_URL || "https://price-production-c1cb.up.railway.app";
 
 interface SocketContextType {
   socket: Socket | null;
