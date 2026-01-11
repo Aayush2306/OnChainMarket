@@ -20,22 +20,16 @@ import {
   Bell
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { useState } from "react";
 import mainLogo from "@/assets/main-logo.png";
 import profileImg from "@/assets/profile.png";
 
 export function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
-  const { disconnect } = useWallet();
   const [, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
-    try {
-      await disconnect();
-    } catch {
-    }
     await logout();
     setLocation("/");
   };
@@ -140,7 +134,7 @@ export function Navbar() {
             <Link href="/login">
               <Button className="gap-2" data-testid="button-login">
                 <Wallet className="h-4 w-4" />
-                Connect Wallet
+                Login with Phantom
               </Button>
             </Link>
           )}

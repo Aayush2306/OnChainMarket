@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { SocketProvider } from "@/context/SocketContext";
-import { MultiChainWalletProvider } from "@/context/WalletContext";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import NotFound from "@/pages/not-found";
@@ -101,14 +100,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <MultiChainWalletProvider>
-          <AuthProvider>
-            <SocketProvider>
-              <AppContent />
-              <Toaster />
-            </SocketProvider>
-          </AuthProvider>
-        </MultiChainWalletProvider>
+        <AuthProvider>
+          <SocketProvider>
+            <AppContent />
+            <Toaster />
+          </SocketProvider>
+        </AuthProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

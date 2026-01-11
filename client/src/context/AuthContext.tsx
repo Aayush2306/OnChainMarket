@@ -8,7 +8,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   needsOnboarding: boolean;
   setNeedsOnboarding: (value: boolean) => void;
-  login: (walletAddress: string, signature: string, name?: string, username?: string, chainType?: string) => Promise<void>;
+  login: (walletAddress: string, signature: string, name?: string, username?: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
   walletAddress: string | null;
@@ -46,8 +46,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuth();
   }, []);
 
-  const login = async (walletAddress: string, signature: string, name?: string, username?: string, chainType: string = "solana") => {
-    const userData = await api.verifySignature(walletAddress, signature, name, username, chainType) as User;
+  const login = async (walletAddress: string, signature: string, name?: string, username?: string) => {
+    const userData = await api.verifySignature(walletAddress, signature, name, username) as User;
     setUser(userData);
     setNeedsOnboarding(false);
   };
